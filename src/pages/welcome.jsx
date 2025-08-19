@@ -1,294 +1,242 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import welcomeImg from "../assets/welcome.jpg";
-import logoImg from "../assets/logo.png";
+import { FaUser, FaLock } from "react-icons/fa";
+import bgImage from "../assets/welcome.jpg.jpg";
+import logoImage from "../assets/logo.png";
 
-export default function WelcomePage() {
-  const [showForgot, setShowForgot] = useState(false);
+export default function LoginPage() {
+  const [form, setForm] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [regFirstName, setRegFirstName] = useState("");
+  const [regLastName, setRegLastName] = useState("");
   const [forgotEmail, setForgotEmail] = useState("");
-  const [forgotPassword, setForgotPassword] = useState("");
-  const [forgotConfirm, setForgotConfirm] = useState("");
-
-  // Handle Forgot Password
-  const handleForgotPassword = (e) => {
-    e.preventDefault();
-    if (forgotPassword !== forgotConfirm) {
-      alert("Passwords do not match.");
-      return;
-    }
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const idx = users.findIndex(u => u.email === forgotEmail);
-    if (idx === -1) {
-      alert("Email not found.");
-      return;
-    }
-    users[idx].password = forgotPassword;
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("Password updated successfully!");
-    setShowForgot(false);
-    setForgotEmail("");
-    setForgotPassword("");
-    setForgotConfirm("");
-  };
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const [showSignup, setShowSignup] = useState(false);
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [signupData, setSignupData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: ""
-  });
 
-  // Handle Login
+  // Login logic with localStorage
   const handleLogin = (e) => {
     e.preventDefault();
-    // Check for admin credentials
-    if (loginEmail === "admin@enkonix.in" && loginPassword === "admin123") {
-      localStorage.setItem("firstname", "admin");
-      localStorage.setItem("lastname", "dashboard");
-      localStorage.setItem("email", loginEmail);
+    if (email === "admin@enkonix.in" && password === "admin123") {
       navigate("/admindashboard");
       return;
     }
+    // Check localStorage for registered users
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find(u => u.email === loginEmail && u.password === loginPassword);
-    if (user) {
-      // Store user details in localStorage for dashboard/avatar
-      localStorage.setItem("firstname", user.firstName || "");
-      localStorage.setItem("lastname", user.lastName || "");
-      localStorage.setItem("email", user.email || "");
+    const foundUser = users.find(
+      (u) => (u.email === email || u.name === email) && u.password === password
+    );
+    if (foundUser) {
       navigate("/home1");
     } else {
-      alert("Invalid email or password.");
+      setError("Invalid credentials. Please try again.");
     }
   };
 
-  // Handle Signup
-  const handleSignup = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    if (signupData.password !== signupData.confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+    // Get users from localStorage
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    if (users.find(u => u.email === signupData.email)) {
-      alert("Email already registered.");
+    // Check if email already exists
+    if (users.some((u) => u.email === regEmail)) {
+      setMessage("Email already registered. Please login.");
+      setForm("login");
+      setRegEmail("");
+      setRegPassword("");
+      setRegFirstName("");
+      setRegLastName("");
       return;
     }
-    const now = new Date();
-    const newUser = {
-      firstName: signupData.firstName,
-      lastName: signupData.lastName,
-      email: signupData.email,
-      phone: signupData.phone,
-      password: signupData.password,
-      signupTime: now.toLocaleTimeString(),
-      signupDate: now.toLocaleDateString()
-    };
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("Signup successful!");
-    setShowSignup(false);
-    setSignupData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: ""
+    // Add new user
+    users.push({
+      firstName: regFirstName,
+      lastName: regLastName,
+      email: regEmail,
+      password: regPassword,
     });
+    localStorage.setItem("users", JSON.stringify(users));
+    setMessage("Registration successful! Please login.");
+    setForm("login");
+    setRegEmail("");
+    setRegPassword("");
+    setRegFirstName("");
+    setRegLastName("");
+  };
+
+  const handleForgot = (e) => {
+    e.preventDefault();
+    setMessage("Password reset link sent to your email.");
+    setForm("login");
+    setForgotEmail("");
   };
 
   return (
-    <div className="grid h-screen  md:grid-cols-2">
-      {/* LEFT SECTION */}
-      <div className="bg-[#00bfff] relative w-full h-full min-h-[200px]">
-        <img 
-          src={welcomeImg} 
-          alt="Welcome" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
-
-      {/* RIGHT SECTION */}
-      <div className="flex items-center bg-[#00BFFF]/10 justify-center p-4 md:p-8">
-        <div className="w-full max-w-md">
-          
-          {!showSignup && !showForgot ? (
-            /* LOGIN FORM */
-            <>
-              <div className="flex flex-col items-left mb-4">
-                <img src={logoImg} alt="Logo" className="h-13 w-20 mb-2" />
-              </div>
-              <h2 className="text-2xl font-bold mb-6 text-left">Login</h2>
-              <form className="space-y-4" onSubmit={handleLogin}>
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  className="w-full border p-3 rounded-lg"
-                  value={loginEmail}
-                  onChange={e => setLoginEmail(e.target.value)}
-                  required
-                />
-                <input 
-                  type="password" 
-                  placeholder="Password" 
-                  className="w-full border p-3 rounded-lg"
-                  value={loginPassword}
-                  onChange={e => setLoginPassword(e.target.value)}
-                  required
-                />
-                <div className="flex justify-between items-center text-sm">
-                  <button type="button" className="text-[#00BFFF] hover:underline" onClick={() => setShowForgot(true)}>Forgot password?</button>
-                </div>
-                <button 
-                  type="submit" 
-                  className="w-full bg-[#00BFFF] text-white p-3 rounded-lg hover:bg-[#00BFFF]"
-                >
-                  Login
-                </button>
-              </form>
-
-              <p className="mt-4 text-sm text-gray-600">
-                Don’t have an account?{" "}
-                <button 
-                  className="text-[#00BFFF] hover:underline" 
-                  onClick={() => setShowSignup(true)}
-                >
-                  Sign up
-                </button>
-              </p>
-            </>
-          ) : showForgot ? (
-            /* FORGOT PASSWORD FORM */
-            <>
-              <div className="flex flex-col items-left mb-4">
-                <img src={logoImg} alt="Logo" className="h-13 w-20 mb-2" />
-              </div>
-              <h2 className="text-2xl font-bold mb-6 text-left">Reset Password</h2>
-              <form className="space-y-4" onSubmit={handleForgotPassword}>
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+      }}
+    >
+      {/* Logo in top left */}
+      <img
+        src={logoImage}
+        alt="Stackly Logo"
+        className="h-16 absolute top-6 left-6 z-10 bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
+        style={{ objectFit: "contain" }}
+      />
+      <div className="bg-transparent w-full max-w-md mx-4 flex flex-col items-center">
+        <h2 className="text-4xl font-light text-white mb-8 mt-2 tracking-wide">Welcome to Foodify</h2>
+        {message && (
+          <div className="text-green-700 text-sm mb-2 text-center">{message}</div>
+        )}
+        {form === "login" && (
+          <form onSubmit={handleLogin} className="space-y-6 w-full">
+            <div className="relative mb-4">
+              <input
+                type="text"
+                placeholder="Email or Username"
+                className="w-full border-b border-gray-200 bg-transparent py-3 pl-10 pr-4 text-white placeholder-gray-200 focus:outline-none focus:border-red-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <FaUser className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-300" />
+            </div>
+            <div className="relative mb-6">
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full border-b border-gray-200 bg-transparent py-3 pl-10 pr-4 text-white placeholder-gray-200 focus:outline-none focus:border-red-400"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <FaLock className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-300" />
+            </div>
+            {error && <div className="text-red-400 text-sm text-center">{error}</div>}
+            <button
+              type="submit"
+              className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-md shadow-md transition"
+            >
+              Login
+            </button>
+            <div className="flex justify-end mt-2 text-sm">
+              <button
+                className="text-gray-200 hover:underline"
+                type="button"
+                onClick={() => setForm("forgot")}
+              >
+                Forgot Password?
+              </button>
+            </div>
+          </form>
+        )}
+        {form === "register" && (
+          <form onSubmit={handleRegister} className="space-y-5">
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <label className="block text-gray-700 mb-1">First Name</label>
                 <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full border p-3 rounded-lg"
-                  value={forgotEmail}
-                  onChange={e => setForgotEmail(e.target.value)}
+                  type="text"
+                  className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                  value={regFirstName}
+                  onChange={(e) => setRegFirstName(e.target.value)}
                   required
                 />
-                <input
-                  type="password"
-                  placeholder="New Password"
-                  className="w-full border p-3 rounded-lg"
-                  value={forgotPassword}
-                  onChange={e => setForgotPassword(e.target.value)}
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Confirm New Password"
-                  className="w-full border p-3 rounded-lg"
-                  value={forgotConfirm}
-                  onChange={e => setForgotConfirm(e.target.value)}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600"
-                >
-                  Reset Password
-                </button>
-                <button
-                  type="button"
-                  className="w-full mt-2 bg-gray-200 text-gray-700 p-3 rounded-lg hover:bg-gray-300"
-                  onClick={() => setShowForgot(false)}
-                >
-                  Cancel
-                </button>
-              </form>
-            </>
-          ) : (
-            /* SIGNUP FORM */
-            <>
-            <div className="flex flex-col items-left mb-4">
-                <img src={logoImg} alt="Logo" className="h-13 w-20 mb-2" />
               </div>
-              <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
-              <form className="space-y-4" onSubmit={handleSignup}>
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    placeholder="First Name" 
-                    className="w-1/2 border p-3 rounded-lg"
-                    value={signupData.firstName}
-                    onChange={e => setSignupData({ ...signupData, firstName: e.target.value })}
-                    required
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Last Name" 
-                    className="w-1/2 border p-3 rounded-lg"
-                    value={signupData.lastName}
-                    onChange={e => setSignupData({ ...signupData, lastName: e.target.value })}
-                    required
-                  />
-                </div>
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  className="w-full border p-3 rounded-lg"
-                  value={signupData.email}
-                  onChange={e => setSignupData({ ...signupData, email: e.target.value })}
+              <div className="flex-1">
+                <label className="block text-gray-700 mb-1">Last Name</label>
+                <input
+                  type="text"
+                  className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                  value={regLastName}
+                  onChange={(e) => setRegLastName(e.target.value)}
                   required
                 />
-                <input 
-                  type="tel" 
-                  placeholder="Phone Number" 
-                  className="w-full border p-3 rounded-lg"
-                  value={signupData.phone}
-                  onChange={e => setSignupData({ ...signupData, phone: e.target.value })}
-                  required
-                />
-                <input 
-                  type="password" 
-                  placeholder="Password" 
-                  className="w-full border p-3 rounded-lg"
-                  value={signupData.password}
-                  onChange={e => setSignupData({ ...signupData, password: e.target.value })}
-                  required
-                />
-                <input 
-                  type="password" 
-                  placeholder="Confirm Password" 
-                  className="w-full border p-3 rounded-lg"
-                  value={signupData.confirmPassword}
-                  onChange={e => setSignupData({ ...signupData, confirmPassword: e.target.value })}
-                  required
-                />
-                <button 
-                  type="submit" 
-                  className="w-full bg-[#00BFFF] text-white p-3 rounded-lg hover:bg-[#00BFFF]"
-                >
-                  Sign Up
-                </button>
-              </form>
-
-              <p className="mt-4 text-sm text-gray-600">
-                Already have an account?{" "}
-                <button 
-                  className="text-[#00BFFF] hover:underline" 
-                  onClick={() => setShowSignup(false)}
-                >
-                  Login
-                </button>
-              </p>
-            </>
-          )}
-
-        </div>
+              </div>
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                value={regEmail}
+                onChange={(e) => setRegEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-1">Password</label>
+              <input
+                type="password"
+                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                value={regPassword}
+                onChange={(e) => setRegPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
+            >
+              Register
+            </button>
+          </form>
+        )}
+        {form === "forgot" && (
+          <form onSubmit={handleForgot} className="space-y-5">
+            <div>
+              <label className="block text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
+            >
+              Send Reset Link
+            </button>
+          </form>
+        )}
+        {/* Only show Register and Forgot Password for login form, else show Back to Login */}
+        {form === "login" && (
+          <div className="flex justify-between mt-4 text-sm">
+            <button
+              className="text-red-300 hover:underline"
+              onClick={() => {
+                setForm("register");
+                setError("");
+                setMessage("");
+              }}
+              type="button"
+            >
+              Register
+            </button>
+          </div>
+        )}
+        {form !== "login" && (
+          <div className="flex justify-center mt-4 text-sm">
+            <button
+              className="text-red-300 hover:underline"
+              onClick={() => {
+                setForm("login");
+                setError("");
+                setMessage("");
+              }}
+              type="button"
+            >
+              Back to Login
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

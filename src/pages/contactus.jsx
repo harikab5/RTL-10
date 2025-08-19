@@ -6,26 +6,27 @@ import contact3 from "../assets/contact3.webp";
 import faqImage from "../assets/faq.jpg";
 const faqs = [
   {
-    question: "How do I get started with your services?",
-    answer: "Simply reach out to our team through the contact form or call us directly — we’ll guide you through every step.",
+    question: "How do I place an order online?",
+    answer: "You can easily order through our website or mobile app by browsing the menu, selecting your dishes, and checking out securely.",
   },
   {
-    question: "What types of businesses do you work with?",
-    answer: "We partner with startups, SMEs, and enterprises across various industries.",
+    question: "Do you offer home delivery?",
+    answer: "Yes, we provide fast and reliable home delivery to your doorstep within our service area.",
   },
   {
-    question: "Do you provide custom solutions?",
-    answer: "Yes, we tailor our services to meet your specific goals and challenges.",
+    question: "Can I customize my order?",
+    answer: "Absolutely! You can add special instructions, choose spice levels, and request add-ons while placing your order.",
   },
   {
-    question: "How quickly can you respond to urgent matters?",
-    answer: "Our team is available for priority support, ensuring quick response times when you need us most.",
+    question: "What areas do you deliver to?",
+    answer: "We currently deliver across major parts of the city. You can check delivery availability by entering your location at checkout.",
   },
   {
-    question: "What makes your company different?",
-    answer: "We combine deep expertise with personalized service, delivering results you can trust.",
+    question: "Do you offer special deals or discounts?",
+    answer: "Yes, we regularly run promotions, combo offers, and discounts. Keep an eye on our website or app for the latest deals.",
   },
 ];
+
 
 
 
@@ -98,20 +99,21 @@ export default function ContactHero() {
         {/* Content */}
         <div className={`relative text-center px-4 max-w-2xl ${theme === 'dark' ? 'text-white' : 'text-white'}`}> 
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-            Get in <span className="text-[#00bfff]">Touch</span> Today
+            Get in <span className="text-red-500">Touch</span> Today
           </h1>
           <p className="text-lg md:text-2xl font-light mb-6">
-            Building <span className="text-[#00bfff] font-semibold">solutions</span>, 
-            creating <span className="text-[#00bfff] font-semibold">success</span> — let's make it happen together.
-          </p>
+  Serving <span className="text-white font-semibold">flavors</span>, 
+  delivering <span className="text-white font-semibold">happiness</span> — enjoy every bite with us.
+</p>
+
         </div>
       </section>
 
       {/* Contact Cards Section */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`}> 
+      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}> 
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Heading */}
-        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${theme === 'dark' ? 'text-[#00bfff]' : 'text-white'}`}> 
+        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${theme === 'dark' ? 'text-red-500' : 'text-black'}`}> 
           Meet Our Support Team
         </h2>
         {/* Cards Grid */}
@@ -126,7 +128,7 @@ export default function ContactHero() {
                 alt={card.title}
                 className="w-full h-56 object-cover rounded-xl mb-6"
               />
-              <h3 className="text-xl font-bold mb-2" style={{ color: '#00bfff' }}>
+              <h3 className="text-xl font-bold mb-2" style={{ color: 'red-500' }}>
                 {card.title}
               </h3>
               <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{card.text}</p>
@@ -138,15 +140,15 @@ export default function ContactHero() {
 
 
 
-      <section className={`py-20 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`}>
+      <section className={`py-20 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
       <div className="max-w-4xl mx-auto px-6">
         {/* Small Heading */}
-        <p className="text-[#00bfff] font-semibold uppercase mb-2">
+        <p className="text-red-500 font-semibold uppercase mb-2">
           Get in Touch
         </p>
         {/* Main Heading */}
         <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}` }>
-          Need help? <span className="text-[#00bfff]">Let's get in touch</span>
+          Need help? <span className="text-red-500">Let's get in touch</span>
         </h2>
 
         {/* Contact Form */}
@@ -161,32 +163,32 @@ export default function ContactHero() {
             <input
               type="text"
               placeholder="First Name"
-              className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+              className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
             />
             <input
               type="text"
               placeholder="Last Name"
-              className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+              className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
             />
           </div>
           <input
             type="email"
             placeholder="Email"
-            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
           />
           <input
             type="tel"
             placeholder="Phone"
-            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
           />
           <textarea
             rows="5"
             placeholder="Write a Message"
-            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
           ></textarea>
           <button
             type="submit"
-            className="w-full bg-[#00bfff] text-white font-semibold py-3 rounded-lg hover:bg-[#00a6d6] transition"
+            className="w-full bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition"
             disabled={formSubmitted}
           >
             {formSubmitted ? 'Submitted!' : 'Send Message'}
@@ -199,16 +201,16 @@ export default function ContactHero() {
     </section>
 
 
-      <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`}>
+      <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Small heading */}
-        <p className="text-[#fff] font-semibold uppercase mb-2">
+        <p className="text-red-900 font-semibold uppercase mb-2">
           Location
         </p>
 
         {/* Main heading */}
         <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-          How to <span className="text-[#fff]">Reach</span> Our Location
+          How to Reach Our Location
         </h2>
 
         {/* Map embed */}
@@ -229,15 +231,15 @@ export default function ContactHero() {
 
 
 
-      <section className={`py-20 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`}>
+      <section className={`py-20 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
       <div className="max-w-7xl mx-auto px-6 grid  md:grid-cols-2 gap-12 items-center">
         {/* Left: Image and Heading */}
         <div>
-          <p className="text-[#00bfff] font-semibold uppercase mb-2">
+          <p className="text-red-500 font-semibold uppercase mb-2">
             Frequently Asked Questions
           </p>
           <h2 className={`text-4xl md:text-5xl font-extrabold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            Got <span className="text-[#00bfff]">Questions?</span> We've Got Answers
+            Got <span className="text-red-500">Questions?</span> We've Got Answers
           </h2>
           <img 
             src={faqImage} 
@@ -261,7 +263,7 @@ export default function ContactHero() {
                 <span className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {faq.question}
                 </span>
-                <span className="text-[#00bfff] text-2xl">
+                <span className="text-red-500 text-2xl">
                   {openIndex === index ? "−" : "+"}
                 </span>
               </button>
@@ -277,13 +279,13 @@ export default function ContactHero() {
     </section>
 
 
-      <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`}>
+      <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
       <div className="max-w-4xl mx-auto text-center px-6">
         {/* Heading */}
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${theme === 'dark' ? 'text-[#00bfff]' : 'text-gray-900'}`}>
-          Stay <span className="text-[#fff]">Updated</span>
+        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${theme === 'dark' ? 'text-red-500' : 'text-gray-900'}`}>
+          Stay Updated
         </h2>
-        <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>
+        <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-black'}`}>
           Subscribe to our newsletter and never miss our latest news, updates, and special offers.
         </p>
 
@@ -298,12 +300,12 @@ export default function ContactHero() {
           <input 
             type="email" 
             placeholder="Enter your email" 
-            className={`flex-1 px-6 py-4 rounded-xl border w-full sm:w-auto focus:outline-none focus:border-[#00bfff] ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-300 text-gray-800 bg-white'}`}
+            className={`flex-1 px-6 py-4 rounded-xl border w-full sm:w-auto focus:outline-none focus:border-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-300 text-gray-800 bg-white'}`}
             disabled={newsletterSubmitted}
           />
           <button 
             type="submit" 
-            className="bg-[#000] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#00] transition duration-300 w-full sm:w-auto"
+            className="bg-red-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#00] transition duration-300 w-full sm:w-auto"
             disabled={newsletterSubmitted}
           >
             {newsletterSubmitted ? 'Subscribed!' : 'Subscribe'}

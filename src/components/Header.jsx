@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ScrollToTop from '../pages/scroll-top';
-
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
@@ -93,7 +91,7 @@ const Header = () => {
             >
               <button
                 onClick={() => navigate('/home1')}
-                className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-[#00BFFF] transition-colors duration-200`}
+                className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
                 aria-haspopup="true"
                 aria-expanded={isHomeDropdownOpen}
               >
@@ -113,7 +111,7 @@ const Header = () => {
 
             <Link
               to="/aboutus"
-              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-[#00BFFF] transition-colors duration-200`}
+              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
               About Us
             </Link>
@@ -134,7 +132,7 @@ const Header = () => {
             >
               <button
                 onClick={() => navigate('/services')}
-                className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-[#00BFFF] transition-colors duration-200`}
+                className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
                 aria-haspopup="true"
                 aria-expanded={isServicesDropdownOpen}
               >
@@ -146,12 +144,54 @@ const Header = () => {
               {isServicesDropdownOpen && (
                 <div className={`absolute top-full left-0 mt-2 w-48 rounded-md shadow-lg border py-2 ${theme === 'dark' ? 'bg-[#1E2A38] border-[#141B25]' : 'bg-white border-gray-200'}`}>
                   <Link to="/services" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>All Services</Link>
-                  <Link to="/Artificial-Intelligence&Machine-Learning" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>Artificial Intelligence and machine learning</Link>
-                  <Link to="/web-development" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>web Development</Link>
-                  <Link to="/DataScience&Analytics" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>Data Science and Analytics</Link>
-                  <Link to="/blockchaincryptocurrency" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>Blockchain and Cryptocurrency</Link>
-                  <Link to="/Cybersecurity&Ethical-Hacking" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>cybersecurity and Ethical Hacking</Link>
-                  <Link to="/CloudComputing&DevOps" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>Cloud Computing and DevOps</Link>
+                  <Link 
+  to="/Food-Delivery" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Food Delivery
+</Link>
+
+<Link 
+  to="/Catering-Services" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Catering Services
+</Link>
+
+<Link 
+  to="/Dine-In-Experience" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Dine-In Experience
+</Link>
+
+<Link 
+  to="/PartyOrders-BulkMeals" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Party Orders & Bulk Meals
+</Link>
+
+<Link 
+  to="/Subscription-Meals" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Subscription Meals
+</Link>
+
+<Link 
+  to="/Takeaway-Pickup" 
+  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
+  onClick={() => setIsServicesDropdownOpen(false)}
+>
+  Takeaway / Pickup
+</Link>
+
                 </div>
               )}
             </div>
@@ -159,14 +199,14 @@ const Header = () => {
           
             <Link
               to="/blog"
-              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-[#00BFFF] transition-colors duration-200`}
+              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
               Blog
             </Link>
 
             <Link
               to="/contactus"
-              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-[#00BFFF] transition-colors duration-200`}
+              className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
               Contact Us
             </Link>
@@ -207,9 +247,8 @@ const Header = () => {
                 }
   return (
     <>
-      <ScrollToTop />
                     <button
-                      className="w-10 h-10 rounded-full bg-[#00bfff] flex items-center justify-center text-white font-semibold focus:outline-none"
+                      className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-semibold focus:outline-none"
                       onClick={() => setIsAvatarDropdownOpen((v) => !v)}
                     >
                       {initials}
@@ -218,7 +257,7 @@ const Header = () => {
                       <div className={`absolute right-0 mt-2 w-40 rounded-md shadow-lg border py-2 z-50 ${theme === 'dark' ? 'bg-[#1E2A38] border-[#141B25]' : 'bg-white border-gray-200'}`}> 
                         {email === 'admin@enkonix.in' && (
                           <button
-                            className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#00bfff]' : 'text-gray-800 hover:bg-blue-100'}`}
+                            className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                             onClick={() => { setIsAvatarDropdownOpen(false); navigate('/admindashboard'); }}
                           >
                             Back to Admin Dashboard
@@ -227,14 +266,14 @@ const Header = () => {
                         {/* User Dashboard link for non-admin users */}
                         {email && email !== 'admin@enkonix.in' && (
                           <button
-                            className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#00bfff]' : 'text-gray-800 hover:bg-blue-100'}`}
+                            className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                             onClick={() => { setIsAvatarDropdownOpen(false); navigate('/userdashboard'); }}
                           >
                             User Dashboard
                           </button>
                         )}
                         <button
-                          className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#00bfff]' : 'text-gray-800 hover:bg-blue-100'}`}
+                          className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                           onClick={() => { setIsAvatarDropdownOpen(false); navigate('/welcome'); }}
                         >
                           Logout
@@ -286,7 +325,7 @@ const Header = () => {
                 return (
                   <>
                     <button
-                      className="w-10 h-10 rounded-full bg-[#00BFFF] flex items-center justify-center text-white font-semibold focus:outline-none"
+                      className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-semibold focus:outline-none"
                       onClick={() => setIsAvatarDropdownOpen((v) => !v)}
                     >
                       {initials}
@@ -343,7 +382,7 @@ const Header = () => {
                 </button>
                 {isHomeDropdownOpen && (
                   <div className="pl-4 space-y-1">
-                    <a href="/home1" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>Home 1</a>
+                    <a href="/" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>Home 1</a>
                     <a href="/home2" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>Home 2</a>
                   </div>
                 )}
@@ -367,12 +406,48 @@ const Header = () => {
                 {isServicesDropdownOpen && (
                   <div className="pl-4 space-y-1">
                     <Link to="/services" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>All Services</Link>
-                    <Link to="/Artificial-Intelligence&Machine-Learning" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Artificial Intelligence and Machine Learning</Link>
-                    <Link to="/web-development" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Web Development</Link>
-                    <Link to="/DataScience&Analytics" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Data Science and Analytics</Link>
-                    <Link to="/blockchaincryptocurrency" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Blockchain and Cryptocurrency</Link>
-                    <Link to="/Cybersecurity&Ethical-Hacking" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Cybersecurity and Ethical Hacking</Link>
-                    <Link to="/CloudComputing&DevOps" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>Cloud Computing and DevOps</Link>
+                    <Link 
+  to="/Food-Delivery" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Food Delivery
+</Link>
+
+<Link 
+  to="/Catering-Services" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Catering Services
+</Link>
+
+<Link 
+  to="/Dine-In-Experience" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Dine-In Experience
+</Link>
+
+<Link 
+  to="/PartyOrders-BulkMeals" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Party Orders & Bulk Meals
+</Link>
+
+<Link 
+  to="/Subscription-Meals" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Subscription Meals
+</Link>
+
+<Link 
+  to="/Takeaway-Pickup" 
+  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
+  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
+  Takeaway / Pickup
+</Link>
+
                   </div>
                 )}
               </div>
@@ -382,7 +457,7 @@ const Header = () => {
                 Blog
               </Link>
 
-              <Link to="/contactus" className="block px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/contact" className="block px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
                 Contact Us
               </Link>
             </div>

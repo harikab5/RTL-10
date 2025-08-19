@@ -1,73 +1,139 @@
 import React from "react";
 import blogHero from "../assets/blog.mp4";
 import { Brain, Code, BarChart3 } from "lucide-react";
-import blog1 from "../assets/blog1.jpeg";
-import blog2 from "../assets/blog2.webp";
-import blog3 from "../assets/blog3.avif";
+import feature1 from "../assets/feature1.webp"; // re
+import feature2 from "../assets/feature2.jpg"; // replace with your delivery-related image
+import feature3 from "../assets/feature3.png"; // replace with your cuisine variety image
 import { Link } from "react-router-dom";
 const categories = [
   {
-    name: "AI & ML",
-    desc: "Discover the latest in artificial intelligence and machine learning.",
-    
+    name: "Starters",
+    desc: "Tasty appetizers and light bites to kickstart your meal.",
   },
   {
-    name: "Web Development",
-    desc: "Explore modern frameworks, tools, and best practices.",
-   
+    name: "Main Course",
+    desc: "Deliciously crafted dishes to satisfy every craving.",
   },
   {
-    name: "Data Science",
-    desc: "Learn about data analytics, visualization, and insights.",
-    
+    name: "Desserts",
+    desc: "Sweet treats and indulgent delights to end on a high note.",
   },
   {
-    name: "Business & Strategy",
-    desc: "Insights on innovation, startups, and digital transformation.",
-   
+    name: "Beverages",
+    desc: "Refreshing drinks, juices, and shakes to complement your meal.",
   },
 ];
+const cookingTips = [
+  {
+    tip: "Always soak onions in cold water for 10 minutes before using in salads – it removes bitterness and adds crunch.",
+  },
+  {
+    tip: "Marinate meat at least 30 minutes before cooking – it makes it juicier and full of flavor.",
+  },
+  {
+    tip: "Use leftover rice to make quick fried rice – it cooks better and doesn’t stick together.",
+  },
+  {
+    tip: "Add a pinch of salt while boiling pasta – it enhances the flavor and prevents stickiness.",
+  },
+  {
+    tip: "Toast spices lightly before grinding or cooking – it brings out deeper flavors and aroma.",
+  },
+  {
+    tip: "When frying, don’t overcrowd the pan – it lowers oil temperature and makes food soggy.",
+  },
+  {
+    tip: "Use lemon juice to balance overly salty or spicy dishes – it adds freshness too.",
+  },
+  {
+    tip: "Let cooked meat rest for 5 minutes before cutting – it locks in juices for better taste.",
+  },
+];
+
   const features = [
-    {
-      title: "AI & Machine Learning",
-      description:
-        "Harness the power of AI and ML to automate processes, gain predictive insights, and build intelligent applications tailored to your business needs.",
-      image: blog1,
-      link: "/ai-ml",
-    },
-    {
-      title: "Web Development",
-      description:
-        "From responsive websites to scalable web apps, our development services ensure seamless user experiences and robust online presence.",
-      image: blog2,
-      link: "/web-development",
-    },
-    {
-      title: "Data Science",
-      description:
-        "Transform raw data into meaningful insights with advanced analytics, visualization, and data-driven strategies that boost decision-making.",
-      image: blog3,
-      link: "/data-science",
-    },
-  ];
+  {
+    title: "Fresh & Quality Ingredients",
+    description:
+      "We use only the freshest, handpicked ingredients to create delicious meals. \
+Every dish is crafted with care to ensure authentic taste and balanced nutrition.",
+    image: feature1, // replace with your food-related image
+   link: "/blog/1", 
+  },
+  {
+    title: "Fast & Reliable Delivery",
+    description:
+      "Get your food delivered hot, fresh, and right on time. \
+With smart tracking, you’ll always know exactly when your meal arrives.",
+    image: feature2, // replace with your delivery-related image
+    link: "/blog/2", 
+  },
+  {
+    title: "Wide Variety of Cuisines",
+    description:
+      "From local favorites to global flavors, our menu has something for everyone. \
+Enjoy a wide range of dishes made fresh to satisfy every craving.",
+    image: feature3, // replace with your cuisine variety image
+    link: "/blog/3", 
+  },
+];
+
+
 const services = [
-    {
-      name: "AI & ML",
-      features: ["Predictive Analytics", "Automation", "Chatbots", "Personalization"],
-    },
-    {
-      name: "Web Development",
-      features: ["Responsive Design", "SEO Friendly", "Modern Frameworks", "Performance Optimized"],
-    },
-    {
-      name: "Data Science",
-      features: ["Data Cleaning", "Visualization", "Dashboards", "Advanced Insights"],
-    },
-    {
-      name: "Business Strategy",
-      features: ["Market Research", "Growth Planning", "Digital Strategy", "Innovation Support"],
-    },
-  ];
+  {
+    name: "Food Delivery",
+    features: [
+      "Fast & hassle-free delivery",
+      "Real-time order tracking",
+      "Multiple secure payment options",
+      "Exclusive online deals",
+    ],
+  },
+  {
+    name: "Catering Services",
+    features: [
+      "Customized menus for events",
+      "Professional on-site service",
+      "Bulk food preparation",
+      "Perfect for weddings & corporate events",
+    ],
+  },
+  {
+    name: "Dine-In Experience",
+    features: [
+      "Comfortable family-friendly seating",
+      "Chef’s special signature dishes",
+      "Hygienic & cozy ambience",
+      "Attentive customer service",
+    ],
+  },
+  {
+    name: "Party Orders & Bulk Meals",
+    features: [
+      "Large quantity food packages",
+      "Customizable menu options",
+      "Affordable bulk pricing",
+      "Timely preparation & delivery",
+    ],
+  },
+  {
+    name: "Subscription Meals",
+    features: [
+      "Daily & weekly meal plans",
+      "Healthy & diet-friendly options",
+      "Flexible subscriptions",
+      "Freshly prepared every day",
+    ],
+  },
+  {
+    name: "Takeaway / Pickup",
+    features: [
+      "Quick self-pickup service",
+      "No waiting time",
+      "Freshly packed meals",
+      "Special discounts for takeaway",
+    ],
+  },
+];
 
 
 export default function BlogHero() {
@@ -90,13 +156,7 @@ export default function BlogHero() {
     }
   }, []);
   // Read blogs from localStorage
-  const [latestBlogs, setLatestBlogs] = React.useState([]);
-  React.useEffect(() => {
-    const stored = localStorage.getItem("blogs");
-    if (stored) {
-      setLatestBlogs(JSON.parse(stored));
-    }
-  }, []);
+  
 
   return (
     <div className={theme === 'dark' ? 'min-h-screen bg-black text-white' : 'min-h-screen bg-white text-black'}>
@@ -117,11 +177,11 @@ export default function BlogHero() {
         {/* Content */}
         <div className="relative text-center px-6" style={{ color: theme === 'dark' ? '#fff' : '#fff' }}>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Explore Our <span style={{ color: '#00bfff' }}>Blogs</span>
+            Explore Our <span style={{ color: '#ef4444' }}>Blogs</span>
           </h1>
           <p className={`text-lg md:text-xl max-w-2xl mx-auto ${theme === 'dark' ? 'text-white' : 'text-white'}`}>
             Stay updated with the latest insights, trends, and knowledge in{' '}
-            <span className="font-semibold" style={{ color: theme === 'dark' ? '#00bfff' : '#00bfff' }}>
+            <span className="font-semibold" style={{ color: theme === 'dark' ? '#fff' : '#fff' }}>
               AI, Web Development
             </span>
             , Data Science, and more. Learn and grow with us!
@@ -130,37 +190,14 @@ export default function BlogHero() {
       </section>
 
       {/* Latest Blogs Section */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`}>
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-            Latest <span className="text-[#00bfff]">Blogs</span>
-          </h2>
-          {latestBlogs.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-8">
-              {latestBlogs.map((blog, idx) => (
-                <article key={idx} className={`rounded-2xl shadow hover:shadow-lg transition duration-300 overflow-hidden ${theme === 'dark' ? 'bg-[#222] text-white' : 'bg-gray-50 text-black'}`}>
-                  <img src={blog.image} alt={blog.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <h3 className={`text-xl font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{blog.title}</h3>
-                    <p className={`text-sm leading-relaxed mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>{blog.description}</p>
-                    <div className={`text-xs mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>By {blog.author}</div>
-                    <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>{new Date(blog.createdAt).toLocaleString()}</div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <p className={`text-center text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>No blogs added yet.</p>
-          )}
-        </div>
-      </section>
+      
 
       {/* Featured Articles Section */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`}>
+      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-            Featured <span style={{ color: '#fff' }}>Articles</span>
+            Featured Articles
           </h2>
 
           {/* Grid */}
@@ -185,20 +222,13 @@ export default function BlogHero() {
                   <p className={`text-sm leading-relaxed mb-4 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>
                     {feature.description}
                   </p>
-                  <Link
-                    to={
-                      feature.title === "AI & Machine Learning"
-                        ? "/blog/1"
-                        : feature.title === "Web Development"
-                        ? "/blog/2"
-                        : feature.title === "Data Science"
-                        ? "/blog/3"
-                        : feature.link
-                    }
-                    className="text-[#00bfff] font-semibold hover:underline"
-                  >
-                    Read More →
-                  </Link>
+                 <Link
+  to={feature.link}
+  className="text-red-500 font-semibold hover:underline"
+>
+  Read More →
+</Link>
+
                 </div>
               </article>
             ))}
@@ -206,30 +236,27 @@ export default function BlogHero() {
         </div>
       </section>
       {/* Categories Section */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`}>
+      <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
         <div className="max-w-7xl mx-auto px-6 grid  md:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Explore by <span style={{ color: '#00bfff' }}>Categories</span>
+              Explore by <span style={{ color: '#ef4444' }}>Categories</span>
             </h2>
             <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
-              Our blogs are thoughtfully categorized to help you easily find
-              content that matches your interests—whether it's{' '}
-              <span className="font-semibold" style={{ color: '#00bfff' }}>
-                AI, Web Development, Data Science,
-              </span>{' '}
-              or practical strategies to grow your business.
-            </p>
-            <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
-              Browse the categories and dive into articles curated to keep you ahead 
-              of the curve in technology and industry trends. Whether you’re a 
-              beginner exploring new fields, a professional seeking advanced knowledge, 
-              or a business leader looking for growth strategies, our blogs provide 
-              practical insights, step-by-step guides, and expert opinions tailored to 
-              your journey. Stay inspired, stay informed, and stay connected with the 
-              ever-evolving digital world.
-            </p>
+  Our menu is thoughtfully categorized to help you easily find
+  dishes that match your cravings—whether it's{' '}
+  <span className="font-semibold text-red-500">
+    Starters, Main Course, Desserts,
+  </span>{' '}
+  or refreshing beverages delivered to your doorstep.
+</p>
+<p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
+  Browse through our categories and discover meals crafted to satisfy every taste. 
+  Whether you’re looking for a quick bite, a family dinner, or a sweet treat to end 
+  your day, our restaurant offers freshly prepared food, speedy delivery, and 
+  flavors you’ll love. Enjoy convenience, taste, and quality—all in one place.
+</p>
 
           </div>
 
@@ -241,7 +268,7 @@ export default function BlogHero() {
                 className={`p-6 rounded-2xl shadow-md hover:shadow-lg transition ${theme === 'dark' ? 'bg-[#222] text-white' : 'bg-white text-black'}`}
               >
                 <div className="text-3xl mb-4">{cat.icon}</div>
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#00bfff' }}>{cat.name}</h3>
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#ef4444' }}>{cat.name}</h3>
                 <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{cat.desc}</p>
               </div>
             ))}
@@ -252,11 +279,11 @@ export default function BlogHero() {
 
 
 
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`}>
+      <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Heading */}
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-              Service <span style={{ color: '#fff' }}>Comparison</span>
+              Service Comparison
             </h2>
 
         {/* Responsive Table */}
@@ -298,91 +325,133 @@ export default function BlogHero() {
 
 
 
-  <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`}>
+  <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
     <div className="max-w-6xl mx-auto px-6">
       {/* Heading */}
-      <h2 className="text-4xl md:text-5xl font-bold text-center mb-12" style={{ color: '#00bfff' }}>
+      <h2 className="text-4xl md:text-5xl font-bold text-center mb-12" style={{ color: '#ef4444' }}>
         Myths & Facts
       </h2>
 
       {/* Grid */}
       <div className="grid md:grid-cols-2 gap-10">
-        {/* Item 1 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>You need a lot of money to start investing.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>You can start with small amounts thanks to fractional shares and micro-investing apps.</p>
-          </div>
-        </div>
+  {/* Item 1 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Online food delivery always takes too long.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Our delivery partners ensure your food arrives hot and fresh, usually within 30–40 minutes.
+      </p>
+    </div>
+  </div>
 
-        {/* Item 2 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Checking your credit score hurts it.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Checking your own score is a soft inquiry and does not affect your credit.</p>
-          </div>
-        </div>
+  {/* Item 2 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Restaurant food isn’t as fresh as homemade meals.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        We use fresh, high-quality ingredients daily to prepare every dish with care.
+      </p>
+    </div>
+  </div>
 
-        {/* Item 3 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>All debt is bad.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Some debt like mortgages or student loans can be good if managed responsibly.</p>
-          </div>
-        </div>
+  {/* Item 3 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Online delivery is always expensive.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        With combo deals, discounts, and free delivery offers, you can enjoy great meals at affordable prices.
+      </p>
+    </div>
+  </div>
 
-        {/* Item 4 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Investing is the same as gambling.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Investing is based on research and growth, while gambling is based on chance.</p>
-          </div>
-        </div>
+  {/* Item 4 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Ordering food online is unsafe.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Our platform ensures safe packaging, contactless delivery, and hygienic kitchen practices.
+      </p>
+    </div>
+  </div>
 
-        {/* Item 5 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>You should always avoid credit cards.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Credit cards can be useful if used responsibly and paid off monthly.</p>
-          </div>
-        </div>
+  {/* Item 5 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        You can’t customize your order when ordering online.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Our menu lets you add special instructions, choose spice levels, and request add-ons with ease.
+      </p>
+    </div>
+  </div>
 
-        {/* Item 6 */}
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <h3 className="text-red-600 font-bold">Myth:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Renting is throwing money away.</p>
-          </div>
-          <div className="flex gap-2">
-            <h3 className="text-green-600 font-bold">Fact:</h3>
-            <p className={theme === 'dark' ? 'text-white' : 'text-black'}>Renting can be a smart financial choice depending on your goals.</p>
-          </div>
-        </div>
-      </div>
+  {/* Item 6 */}
+  <div className="space-y-4">
+    <div className="flex gap-2">
+      <h3 className="text-red-600 font-bold">Myth:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        Delivery food is unhealthy.
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <h3 className="text-green-600 font-bold">Fact:</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>
+        We offer balanced meals, healthy options, and freshly prepared dishes to suit your lifestyle.
+      </p>
+    </div>
+  </div>
+</div>
+
     </div>
   </section>
 
+<div className={`py-10 ${theme === 'dark' ? 'bg-[#000]' : 'bg-red-50'}`}>
+  <h2 className={`text-3xl font-bold text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+    Cooking Tips 🧑‍🍳
+  </h2>
 
+  <div className="grid  md:grid-cols-2 gap-6 max-w-4xl mx-auto ">
+    {cookingTips.map((item, index) => (
+      <div 
+        key={index} 
+        className="p-4 border border-gray-200 bg-white rounded-xl shadow-sm hover:shadow-md transition"
+      >
+        <p className={theme === 'dark' ? 'text-black' : 'text-black'}>
+          {item.tip}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
 
     </div>
   );

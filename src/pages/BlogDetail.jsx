@@ -1,177 +1,179 @@
 import React from "react";
+import feature1 from "../assets/feature1.webp"; 
+import feature2 from "../assets/feature2.jpg"; 
+import feature3 from "../assets/feature3.png"; 
 import { useParams, Link } from "react-router-dom";
-import blog1 from "../assets/blog1.jpeg";
-import blog2 from "../assets/blog2.webp";
-import blog3 from "../assets/blog3.avif";
 
 export default function BlogDetail() {
   // Theme state synced with Header
-  const [theme, setTheme] = React.useState('light');
+  
+const [theme, setTheme] = React.useState("light");
+
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') || 'light';
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("theme") || "light";
       setTheme(storedTheme);
+
       const handleThemeChange = () => {
-        const newTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = localStorage.getItem("theme") || "light";
         setTheme(newTheme);
       };
-      window.addEventListener('theme-changed', handleThemeChange);
-      window.addEventListener('storage', handleThemeChange);
+
+      window.addEventListener("theme-changed", handleThemeChange);
+      window.addEventListener("storage", handleThemeChange);
+
       return () => {
-        window.removeEventListener('theme-changed', handleThemeChange);
-        window.removeEventListener('storage', handleThemeChange);
+        window.removeEventListener("theme-changed", handleThemeChange);
+        window.removeEventListener("storage", handleThemeChange);
       };
     }
   }, []);
   const { id } = useParams();
 
-  // Example blog data (you can replace with Admin DB later)
+  // Example blog data
   const blogs = [
   {
     id: "1",
-    title: "AI & Machine Learning",
-    image: blog1,
+    title: "Fresh & Quality Ingredients",
+    image: feature1,
     intro:
-      "AI and Machine Learning are revolutionizing industries with automation, predictive insights, and smarter systems. From automating repetitive tasks to enabling advanced innovations like self-driving cars and personalized medicine, AI is becoming the backbone of modern technology.",
+      "Every dish we prepare starts with the finest, handpicked ingredients. We believe that freshness is the secret to authentic taste, which is why we source daily and prioritize quality over everything else.",
     sections: [
       {
-        heading: "Introduction to AI",
+        heading: "Farm to Table",
         content:
-          "Artificial Intelligence is the simulation of human intelligence in machines that are programmed to think like humans and mimic their actions. It covers multiple branches such as computer vision, natural language processing, robotics, and expert systems. AI systems rely on algorithms and models trained on large datasets, allowing them to adapt and improve over time. Unlike traditional programming, AI learns and evolves, creating systems that can make predictions, reason, and even exhibit creativity.",
+          "We partner with trusted farmers and suppliers to bring you seasonal produce that ensures both freshness and sustainability. Each vegetable, fruit, and herb is carefully chosen to enhance the flavor of our dishes. By sourcing directly from farms, we minimize middlemen, ensuring higher quality and fairer prices. This farm-to-table philosophy helps us support local communities while delivering nutritious food. You can truly taste the difference when your meals are made from fresh, locally grown ingredients. It’s our way of bringing the best of nature straight to your plate."
       },
       {
-        heading: "Benefits of Machine Learning",
+        heading: "Meats & Seafood",
         content:
-          "Machine Learning enables systems to learn from data, improving accuracy and efficiency over time without human intervention. Businesses benefit from predictive analytics, fraud detection, personalized recommendations, and smarter automation. For example, e-commerce platforms use ML to suggest products, streaming services recommend content, and healthcare providers detect diseases earlier. Over time, ML reduces costs, minimizes errors, and adapts to changing environments, ensuring systems remain effective as new challenges arise.",
+          "Our meats are sourced from responsible farms, ensuring tenderness, quality, and ethical practices. Fresh seafood is delivered daily, bringing authentic coastal flavors to your plate. We strictly avoid frozen or chemically treated options, so you enjoy natural flavors and rich nutrition. Every cut of meat is inspected and prepared to maintain juiciness and taste. Our seafood selections undergo rigorous checks to ensure safety and freshness. When you dine with us, you can trust that every bite of protein is wholesome, flavorful, and responsibly sourced."
       },
       {
-        heading: "Real-World Applications",
+        heading: "Healthy Choices",
         content:
-          "AI is used in healthcare (diagnostics, drug discovery, personalized medicine), finance (risk assessment, fraud detection, algorithmic trading), and education (personalized learning paths, grading automation). Self-driving cars use sensors and ML models to interpret surroundings in real-time, while voice assistants like Alexa and Siri understand natural language to interact with users. AI also plays a critical role in agriculture, cybersecurity, supply chain optimization, and even creative industries such as art and music generation.",
+          "We balance taste with nutrition, so every meal nourishes your body without compromising on flavor. From gluten-free to low-carb options, our menu caters to a variety of dietary needs. Our chefs work with nutritionists to design meals that are wholesome and energizing. We also reduce excess oil, sodium, and sugar in our recipes without losing authentic taste. You’ll always find a range of healthy alternatives on our menu, perfect for everyday dining. Eating well has never been this satisfying or delicious."
       },
       {
-        heading: "Automation Advantages",
+        heading: "Spices & Herbs",
         content:
-          "Automation reduces costs, minimizes errors, and speeds up processes across various business sectors. In manufacturing, robots handle repetitive and dangerous tasks, reducing human risk. In offices, AI chatbots automate customer support, while Robotic Process Automation (RPA) takes care of invoice processing, HR onboarding, and compliance. The advantages extend to scalability, where businesses can process millions of operations simultaneously with minimal resources. This leads to faster delivery, better efficiency, and increased profits.",
+          "A blend of authentic spices and fresh herbs creates the soul of our food. From aromatic basil to fiery chili, every flavor note is intentional and balanced. We grind many of our spices in-house to preserve their natural oils and freshness. Herbs are picked daily to enhance both taste and aroma. Our chefs experiment with spice blends to give each dish a unique yet authentic character. The result is a flavor experience that excites your senses and keeps you coming back for more."
       },
       {
-        heading: "Data-Driven Insights",
+        heading: "Chef’s Selection",
         content:
-          "ML models analyze large datasets to provide predictive and prescriptive analytics that support decision-making. For example, retailers forecast demand and optimize inventory, while governments use AI-driven insights for urban planning and disaster management. Predictive analytics identifies upcoming trends, while prescriptive analytics suggests the best possible actions to achieve goals. As organizations collect massive amounts of structured and unstructured data, AI tools help uncover hidden patterns, customer behavior, and business opportunities that would otherwise remain invisible.",
+          "Our chefs carefully curate each recipe, ensuring authenticity while adding a signature twist. They combine years of culinary expertise with modern techniques to surprise your taste buds. Signature sauces, marinades, and toppings are designed to elevate traditional recipes. Every dish goes through multiple tastings before it reaches your plate. Seasonal specials are added regularly to keep the menu exciting and dynamic. This thoughtful process guarantees that every meal is crafted with passion and perfection."
       },
       {
-        heading: "Challenges & Solutions",
+        heading: "Customer Favorites",
         content:
-          "Challenges include bias, data privacy, and model transparency. AI systems can unintentionally perpetuate discrimination if trained on biased data. Privacy concerns arise when personal information is used without consent. Additionally, the 'black box' nature of AI makes it difficult to understand why models make certain decisions. Solutions lie in ethical AI frameworks, transparent algorithms, explainable AI models (XAI), and strict data governance policies. Organizations must also ensure regular audits, diverse datasets, and compliance with international regulations like GDPR to build trust.",
+          "Signature dishes crafted with these premium ingredients have become favorites among our regulars, proving that quality speaks for itself. Many of our recipes are inspired by customer feedback and tailored to suit popular tastes. Dishes like our signature biryani, grilled platters, and fresh salads remain bestsellers year-round. We also introduce limited-time offers based on trending flavors to keep things fresh. Each favorite dish is refined continuously to maintain its reputation. When customers return for the same meal again and again, we know we’re doing it right."
       },
       {
-        heading: "Future Scope",
+        heading: "Our Promise",
         content:
-          "AI will continue evolving, driving innovation in robotics, IoT, and smart cities for decades to come. The future of AI lies in Artificial General Intelligence (AGI), where machines could understand and perform tasks across any domain just like humans. Emerging fields like neuromorphic computing, quantum AI, and bio-AI are set to push the boundaries of what machines can do. In healthcare, AI will power advanced genetic engineering and predictive healthcare, while in education, personalized AI tutors will transform learning experiences globally.",
+          "We guarantee meals made with love, care, and only the best ingredients—because you deserve nothing less. Our sourcing and cooking processes are transparent, so you can trust what goes into your food. We constantly evaluate our quality standards to meet and exceed customer expectations. Hygiene and safety are always prioritized, from the kitchen to your delivery bag. Every order is a reflection of our commitment to excellence. With us, you don’t just get food—you get a promise of freshness, taste, and trust."
       },
     ],
   },
   {
     id: "2",
-    title: "Web Development",
-    image: blog2,
+    title: "Fast & Reliable Delivery",
+    image: feature2,
     intro:
-      "Web Development powers the digital world with responsive websites, scalable applications, and seamless online experiences. From simple static websites to complex enterprise platforms, web development brings businesses, services, and users together on a global scale.",
+      "We know you’re hungry, and we value your time. Our delivery system ensures your order reaches you hot, fresh, and on time—every time.",
     sections: [
       {
-        heading: "Modern Web Frameworks",
+        heading: "Smart Tracking",
         content:
-          "React, Angular, and Vue have transformed frontend development with reusable components and fast rendering. These frameworks encourage modular code, making large applications more maintainable and scalable. Developers also benefit from powerful ecosystems with libraries, community support, and integrations. Progressive frameworks such as Svelte and Next.js are pushing the boundaries even further, enabling faster performance, server-side rendering, and SEO optimization out of the box.",
+          "You’ll always know where your food is, thanks to our real-time delivery tracking system. The moment your order is placed, you can follow its preparation, dispatch, and arrival. Our app provides live updates so you’re never left wondering. Tracking also helps you plan your time better, whether it’s for a lunch break or family dinner. Transparency builds trust, and we make sure you’re informed every step of the way. It’s delivery made smarter, just for you."
       },
       {
-        heading: "Responsive Design",
+        heading: "Hot & Fresh Guarantee",
         content:
-          "Responsive design ensures websites look great on all devices, from mobiles to desktops. With mobile-first development becoming a standard, responsive frameworks like Tailwind CSS and Bootstrap make it easier to adapt layouts for any screen size. Media queries, flexible grids, and adaptive typography ensure a seamless user experience. A well-executed responsive design not only enhances usability but also boosts SEO ranking, as Google prioritizes mobile-friendly websites.",
+          "Orders are packed in insulated containers, ensuring meals arrive just as if they were served in our restaurant. Heat retention technology keeps food warm without compromising its taste or texture. Cold dishes like salads and desserts are packed separately to maintain freshness. We also monitor packaging standards regularly to ensure consistency. This guarantee is our way of showing that we respect your dining experience. When you open the box, it should feel like you’re sitting at our table."
       },
       {
-        heading: "Frontend Technologies",
+        heading: "Wider Reach",
         content:
-          "HTML, CSS, and JavaScript remain the backbone of frontend development. HTML structures content, CSS styles it, and JavaScript adds interactivity. With modern enhancements like CSS Grid, Flexbox, and ES6+ features, developers can now build cleaner, more efficient, and dynamic applications. Frameworks and preprocessors such as Sass, LESS, and TypeScript further enhance productivity, making frontend development faster, cleaner, and more error-resistant.",
+          "Our delivery partners cover more locations than ever before, making it easier for you to enjoy your favorite meals. Whether you live in the heart of the city or on the outskirts, we strive to deliver wherever you are. We continue expanding our network so no one misses out. With strategic delivery hubs, your food doesn’t travel far, ensuring freshness. This extended reach makes us one of the most reliable services around. Wherever you are, we bring happiness to your doorstep."
       },
       {
-        heading: "Backend Systems",
+        heading: "Lightning Speed",
         content:
-          "Node.js, Django, and Laravel power backend operations, ensuring scalability and security. The backend is responsible for managing databases, authentication, APIs, and server-side logic. Node.js provides asynchronous processing, making it great for real-time apps like chat platforms, while Django offers security features out-of-the-box, and Laravel simplifies PHP development with elegant syntax. Cloud-native backends with serverless architecture (AWS Lambda, Firebase) are now emerging as the future, reducing server costs and scaling automatically.",
+          "On average, orders are delivered in under 30 minutes—perfect for quick lunches or family dinners. Our system optimizes routes using smart algorithms, reducing delivery time. We also train our partners to ensure safe yet efficient travel. Emergencies like traffic delays are communicated instantly through updates. This speed doesn’t mean compromising on safety or quality. We simply know that when hunger strikes, time matters most."
       },
       {
-        heading: "API Integrations",
+        heading: "Safe & Hygienic",
         content:
-          "APIs connect systems, enabling apps to share data seamlessly. RESTful APIs and GraphQL are widely used for smooth communication between frontend and backend. Businesses rely on APIs for payment processing, maps, social media integrations, and AI services. With microservices architecture, applications are broken into smaller services communicating via APIs, increasing flexibility and fault tolerance. APIs also open opportunities for third-party developers to build add-ons, boosting product reach and adoption.",
+          "All our deliveries follow strict hygiene protocols to keep you safe and worry-free. Our staff undergoes regular health checks and safety training. Food is sealed in tamper-proof packaging to avoid contamination. Delivery bags are sanitized multiple times a day for extra safety. We also maintain contactless delivery options for your peace of mind. With us, cleanliness is not an option—it’s a guarantee."
       },
       {
-        heading: "Security Practices",
+        heading: "Flexible Scheduling",
         content:
-          "Encryption, authentication, and secure coding keep applications safe from attacks. Developers must guard against threats like SQL injection, XSS, CSRF, and DDoS attacks. SSL certificates, strong password hashing, token-based authentication (JWT), and two-factor authentication are standard practices. Web Application Firewalls (WAF) and automated penetration testing are also becoming essential. As cybercrime increases, businesses must prioritize security at every stage of development instead of treating it as an afterthought.",
+          "Plan ahead by scheduling your delivery for later in the day or even the next day. Our system allows you to choose the time that works best for you. This is ideal for busy professionals, family gatherings, or planned events. You won’t have to worry about last-minute hassles. Even pre-orders get the same attention to quality and freshness. We make sure your meal is ready exactly when you want it."
       },
       {
-        heading: "Scalability Solutions",
+        heading: "Customer Support",
         content:
-          "Cloud platforms like AWS, Azure, and GCP ensure that applications scale with user demand. Scalability involves both vertical (adding resources to a server) and horizontal (adding more servers) scaling. Load balancers, containerization with Docker, and orchestration with Kubernetes make it easier to handle millions of concurrent users. Serverless computing reduces infrastructure costs by scaling automatically. Companies like Netflix and Spotify rely on microservices and cloud scalability to serve millions of global users without interruptions.",
+          "Our 24/7 support ensures that if anything goes wrong, we fix it immediately. Whether it’s a missing item, late delivery, or technical issue, help is just a call away. Our team is trained to resolve queries quickly and politely. Feedback is taken seriously and used to improve our service. We believe customer care is just as important as the food itself. With round-the-clock support, you’ll always feel valued and heard."
       },
     ],
   },
   {
     id: "3",
-    title: "Data Science",
-    image: blog3,
+    title: "Wide Variety of Cuisines",
+    image: feature3,
     intro:
-      "Data Science empowers organizations to extract insights, predict trends, and drive decision-making with data. It combines mathematics, statistics, computer science, and business knowledge to solve real-world problems and generate value from information.",
+      "Why stick to one flavor when you can explore them all? From local favorites to global delicacies, we serve a menu that satisfies every craving.",
     sections: [
       {
-        heading: "Introduction to Data Science",
+        heading: "Local Favorites",
         content:
-          "Data Science combines statistics, computer science, and domain expertise to analyze and interpret data. It covers the full pipeline from data collection, cleaning, and preprocessing to advanced modeling and visualization. Unlike traditional analytics, Data Science uses machine learning to uncover hidden patterns and correlations. Its multidisciplinary nature makes it applicable across diverse sectors like healthcare, retail, sports, finance, and government.",
+          "We celebrate traditional recipes that remind you of home while keeping them fresh and exciting. From classic curries to regional snacks, we honor culinary traditions. Our chefs research authentic cooking methods to maintain cultural accuracy. Local dishes are also adapted slightly for modern tastes, keeping them balanced. This way, every bite feels nostalgic yet refreshing. We bring the warmth of home cooking to your dining table."
       },
       {
-        heading: "Importance of Data",
+        heading: "Global Delicacies",
         content:
-          "Data is the new oil; it drives business decisions and strategies in every sector. Organizations rely on structured (databases, spreadsheets) and unstructured data (text, images, videos, social media). Proper use of data enables smarter marketing, better risk management, and improved customer experiences. For example, companies like Amazon use data to optimize logistics, while Google refines search results, and Netflix improves content recommendations. Data empowers organizations to stay competitive in an increasingly digital world.",
+          "From Italian pasta to Asian stir-fry, our chefs bring authentic international flavors to your table. Each recipe is studied carefully to preserve its cultural roots. Ingredients are imported or locally sourced to match global standards. Our goal is to give you the joy of traveling through food. These dishes let you explore the world without leaving your seat. Every meal is a passport to a new culinary adventure."
       },
       {
-        heading: "Visualization Techniques",
+        heading: "Fusion Specials",
         content:
-          "Tools like Power BI, Tableau, and D3.js help visualize data clearly for decision-makers. Good visualization transforms complex data into understandable graphs, heatmaps, dashboards, and infographics. This allows decision-makers to spot trends, correlations, and anomalies instantly. Advanced visualization techniques like interactive dashboards and real-time charts help businesses react faster. Choosing the right visualization is key—bar charts for comparison, line graphs for trends, scatterplots for correlations, and geographic maps for regional insights.",
+          "Our kitchen experiments with bold combinations, creating unique dishes that you won’t find elsewhere. Fusion allows us to mix the best of different cuisines into one plate. Chefs balance flavors creatively to surprise your taste buds. Signature fusion dishes are often limited-time specials, keeping things exciting. Customers love the thrill of trying something new and unexpected. Innovation is at the heart of our menu, and fusion is where it shines."
       },
       {
-        heading: "Predictive Analytics",
+        heading: "Vegetarian Options",
         content:
-          "Predictive models forecast outcomes, helping businesses prepare for future challenges. Retailers predict customer churn, finance companies assess credit risk, and hospitals forecast patient admissions. Predictive analytics uses regression models, decision trees, and neural networks trained on historical data to estimate future events. Combined with real-time analytics, it allows organizations to act proactively, reducing risks and capturing new opportunities. Industries like weather forecasting and stock trading heavily depend on predictive analytics for planning.",
+          "A wide selection of vegetarian and vegan meals ensures that everyone finds something they love. We use plant-based proteins and fresh produce to create hearty meals. Each dish is designed to be as flavorful and satisfying as its non-veg counterpart. We also experiment with new vegetarian recipes inspired by global cuisines. Vegan desserts and dairy-free options add even more variety. With us, vegetarian dining is never boring—it’s a celebration."
       },
       {
-        heading: "Machine Learning Role",
+        heading: "Seasonal Menus",
         content:
-          "ML algorithms enhance predictions, automate analysis, and improve model performance. Supervised learning handles classification and regression tasks, while unsupervised learning uncovers hidden patterns and clusters in data. Reinforcement learning powers robotics and game AI. In Data Science, ML helps detect fraud, recommend products, optimize supply chains, and even generate text or images. The combination of ML with Big Data technologies allows businesses to process petabytes of information in real-time, unlocking new levels of intelligence.",
+          "We introduce limited-time seasonal dishes, so there’s always something new to try. Seasonal produce is used at its peak freshness, ensuring better flavor. These menus celebrate local festivals, holidays, and changing weather. From summer coolers to winter warm meals, there’s always variety. Seasonal items also allow our chefs to experiment with creative recipes. Each season brings a fresh twist to your dining experience."
       },
       {
-        heading: "Business Use Cases",
+        heading: "Family Meals",
         content:
-          "Data Science helps in fraud detection, customer insights, supply chain optimization, and marketing campaigns. In healthcare, predictive models detect early signs of diseases, while in finance, fraud detection systems save billions by catching anomalies. Retailers like Walmart optimize inventory and pricing using advanced analytics. Sports teams use Data Science to analyze player performance and game strategies. Governments rely on data analytics for traffic management, crime prediction, and public health monitoring.",
+          "Big portions and family-style platters make dining together easier and more joyful. Sharing meals is part of our food philosophy, bringing people closer. Family combos are curated to suit different tastes at the table. We also offer kid-friendly dishes so no one feels left out. Whether it’s a celebration or a casual dinner, family meals fit every occasion. Food tastes better when enjoyed together, and we make sure of it."
       },
       {
-        heading: "Future Trends",
+        heading: "Something for Everyone",
         content:
-          "The future lies in automated data science (AutoML), AI-driven analytics, and real-time data processing. Edge computing will allow faster analysis directly on devices without sending everything to the cloud. AI will make Data Science more accessible through natural language queries, enabling non-technical users to generate insights. Quantum computing promises a revolution in data processing, handling problems impossible for classical systems. As businesses become more data-driven, Data Science will be at the core of every innovation.",
+          "Whether it’s a late-night snack, a healthy breakfast, or a festive dinner, our variety has you covered. The menu is designed to cater to every age group and lifestyle. From light bites to indulgent feasts, there’s no shortage of choices. We keep expanding the menu to match evolving customer preferences. Every dish is freshly prepared, regardless of size or time. With us, you’ll never run out of delicious options."
       },
     ],
   },
 ];
 
-  
-
+  // Find blog by id
   const blog = blogs.find((b) => b.id === id);
 
   if (!blog) {
     return (
-      <div className={
-        `text-center py-20 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`
-      }>
+      <div className={`text-center py-20 ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}>
         <h2 className="text-2xl font-bold">Blog Not Found</h2>
-        <Link to="/blog" className="text-[#00bfff] underline mt-4 block">
+        <Link to="/blog" className="text-red-500 underline mt-4 block">
           Back to Blogs
         </Link>
       </div>
@@ -179,34 +181,40 @@ export default function BlogDetail() {
   }
 
   return (
-    <div className={theme === 'dark' ? 'pt-20 min-h-screen bg-black text-white' : 'pt-20 min-h-screen bg-white text-black'}>
+    <div className={theme === "dark" ? "pt-20 min-h-screen bg-black text-white" : "pt-20 min-h-screen bg-white text-black"}>
       {/* Back Link */}
-      <Link to="/blog" className="text-[#00bfff] underline mt-4 block">
+      <Link to="/blog" className="text-red-500 underline mt-4 block">
         Back to Blogs
       </Link>
+
       {/* Blog Hero */}
       <section className="relative w-full h-[80vh] flex items-center justify-center">
-        <img
-          src={blog.image}
-          alt={blog.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src={blog.image} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50"></div>
       </section>
 
       {/* Blog Content */}
       <section className="max-w-5xl mx-auto px-6 py-12">
-        <p className={`text-lg md:text-xl max-w-5xl text-center mx-auto ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
+        <h1 className="text-4xl font-bold text-center mb-6">{blog.title}</h1>
+        <p className={`text-lg md:text-xl max-w-5xl text-center mx-auto mb-12 ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}>
           {blog.intro}
         </p>
-        {blog.sections.map((sec, index) => (
-          <div key={index} className="mb-10">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#00bfff' }}>
-              {sec.heading}
-            </h2>
-            <p className={`leading-relaxed ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>{sec.content}</p>
-          </div>
-        ))}
+
+        {blog.sections.map((sec, index) => {
+          // Generate slug id from heading
+          const sectionId = sec.heading.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+
+          return (
+            <div key={index} id={sectionId} className="mb-10 scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4" style={{ color: "#ef4444" }}>
+                {sec.heading}
+              </h2>
+              <p className={`leading-relaxed ${theme === "dark" ? "text-gray-200" : "text-gray-700"}`}>
+                {sec.content}
+              </p>
+            </div>
+          );
+        })}
       </section>
     </div>
   );

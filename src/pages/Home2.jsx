@@ -1,359 +1,227 @@
-
-import { Link } from "react-router-dom";
 import React from "react";
-
-
-import home2Video from "../assets/home2hero.mp4";
-import logo1 from "../assets/1.png";
-import logo2 from "../assets/2.png";
-import logo3 from "../assets/3.png";
-import logo4 from "../assets/4.png";
-import logo5 from "../assets/5.webp";
-import logo6 from "../assets/6.png";
-import logo7 from "../assets/7.png";
-import logo8 from "../assets/8.png";
-import logo9 from "../assets/9.png";
-import logo10 from "../assets/10.png";
+import chef1 from "../assets/chef1.jpg";
+import chef2 from "../assets/chef2.jpg";
+import chef3 from "../assets/chef3.jpg";
+import home2hero from "../assets/home2hero.mp4";
+import menu1 from "../assets/menu1.jpg";
+import menu2 from "../assets/menu2.jpg";
+import menu3 from "../assets/menu3.jpg";
+import menu4 from "../assets/menu4.jpg";
+import special1 from "../assets/special1.jpg";
+import special2 from "../assets/special2.jpg";
+import special3 from "../assets/special3.jpg";
+import special4 from "../assets/special4.jpg";
+import buffet1 from "../assets/buffet1.jpg";
+import buffet2 from "../assets/buffet2.jpg";
+import heritage from "../assets/heritage.jpg";
 
 export default function Home2() {
-  // Theme state synced with Header
-  const [theme, setTheme] = React.useState('light');
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(storedTheme);
-      const handleThemeChange = () => {
-        const newTheme = localStorage.getItem('theme') || 'light';
-        setTheme(newTheme);
-      };
-      window.addEventListener('theme-changed', handleThemeChange);
-      window.addEventListener('storage', handleThemeChange);
-      return () => {
-        window.removeEventListener('theme-changed', handleThemeChange);
-        window.removeEventListener('storage', handleThemeChange);
-      };
-    }
-  }, []);
-  const [showRegister, setShowRegister] = React.useState(null); // index of webinar or null
-  const [registerForm, setRegisterForm] = React.useState({ name: '', email: '' });
+	return (
+		<div className="flex flex-col min-h-screen">
+			
+			{/* Hero Section */}
+			<section className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
+				{/* Background Video for Hero Only */}
+				<video
+					className="absolute inset-0 w-full h-full object-cover z-0 brightness-110"
+					src={home2hero}
+					autoPlay
+					loop
+					muted
+					playsInline
+				/>
+				{/* Overlay for readability */}
+				<div className="absolute inset-0 bg-black/50 z-10" />
+				<div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
+					<h1 className="text-5xl md:text-6xl font-serif font-bold text-white text-center mb-4 drop-shadow-lg">
+						Experience Gourmet Dining at Foodify
+					</h1>
+					<p className="text-lg md:text-xl text-white/90 text-center mb-8 max-w-2xl drop-shadow">
+						Welcome to Foodify, where every meal is a celebration! Enjoy chef-crafted dishes, a cozy dine-in atmosphere, and lightning-fast delivery. Discover our diverse menu, special offers, and exceptional service—crafted just for you.
+					</p>
+					<button className="relative border border-white text-white px-8 py-3 rounded-lg text-lg font-serif flex items-center group bg-transparent hover:bg-white/10 transition">
+						Read More
+						<span className="ml-3 w-8 h-0.5 bg-white block group-hover:bg-red-500 transition-all"></span>
+					</button>
+				</div>
+			</section>
 
-  // Handle registration form input
-  const handleRegisterInput = (e) => {
-    const { name, value } = e.target;
-    setRegisterForm((prev) => ({ ...prev, [name]: value }));
-  };
+			{/* Chef’s Specials Gallery Section */}
+			<section className="w-full bg-white py-16 px-4 md:px-0 flex flex-col items-center justify-center">
+  <div className="max-w-6xl w-full mx-auto">
+    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 font-serif text-center">
+      Chef’s Specials Gallery
+    </h2>
 
-  // Handle registration submit
-  const handleRegisterSubmit = (e, webinar) => {
-    e.preventDefault();
-    if (!registerForm.name || !registerForm.email) return;
-    const stored = localStorage.getItem('webinarRegistrations');
-    const registrations = stored ? JSON.parse(stored) : [];
-    registrations.push({
-      ...registerForm,
-      webinarTitle: webinar.title,
-      webinarDate: webinar.date,
-      webinarDescription: webinar.description,
-      registeredAt: new Date().toISOString(),
-    });
-    localStorage.setItem('webinarRegistrations', JSON.stringify(registrations));
-    setRegisterForm({ name: '', email: '' });
-    setShowRegister(null);
-    alert('Registration successful!');
-  };
-  const [webinars, setWebinars] = React.useState([]);
-  React.useEffect(() => {
-    const storedWebinars = localStorage.getItem("webinars");
-    if (storedWebinars) {
-      setWebinars(JSON.parse(storedWebinars));
-    }
-    const handleStorage = () => {
-      const updated = localStorage.getItem("webinars");
-      setWebinars(updated ? JSON.parse(updated) : []);
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
-  const offers = [
-    {
-      title: "50% Off Beginner Courses",
-      description: "Kickstart your learning journey with our top beginner courses at half the price.",
-      bg: "bg-[#00BFFF]",
-    },
-    {
-      title: "Free Trial for 7 Days",
-      description: "Experience our platform for free and explore all features before committing.",
-      bg: "bg-[#00BFFF]",
-    },
-    {
-      title: "Certificate Programs",
-      description: "Earn recognized certificates for your achievements and boost your resume.",
-      bg: "bg-[#00BFFF]",
-    },
-  ];
-  const insights = [
-  {
-    title: "10K+",
-    subtitle: "Students Enrolled",
-  },
-  {
-    title: "500+",
-    subtitle: "Expert Instructors",
-  },
-  {
-    title: "120+",
-    subtitle: "Courses Available",
-  },
-  {
-    title: "95%",
-    subtitle: "Student Satisfaction",
-  },
-];
-
-
-  const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo10];
-  const scrollRef = React.useRef(null);
-  return (
-    <div className={
-      `${theme === 'dark' ? 'min-h-screen  text-white' : 'min-h-screen  text-white'}`
-    }>
-
-      {/* Hero Section */}
-      <section
-        className="relative w-full h-screen overflow-hidden"
-      >
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover"
-          src={home2Video}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold" style={{ color: theme === 'dark' ? '#fff' : '#fff' }}>
-            Transform Your Future with <span style={{ color: '#00BFFF' }}>Next-Level Learning</span>
-          </h1>
-          <p className={`mt-4 max-w-4xl text-lg md:text-xl ${theme === 'dark' ? 'text-fff' : 'text-fff'}`}>
-            Unlock your potential with our expertly designed courses and interactive learning experiences. 
-            Join thousands of learners who are advancing their careers, mastering new skills, and achieving their goals. 
-            Our platform combines expert instructors, hands-on projects, flexible schedules, and a supportive community to help you succeed faster. 
-            Whether you're looking to start a new career, upskill in your current role, or explore new passions, your learning journey begins here.
-          </p>
-          <button
-            className={
-              `mt-6 px-6 py-3 rounded-lg shadow transition font-semibold ` +
-              (theme === 'dark' ? 'bg-[#00BFFF] text-white hover:bg-[#00BFFF]' : 'bg-[#00BFFF] text-white hover:bg-[#00BFFF]')
-            }
-            onClick={() => {
-              const el = document.getElementById('upcoming');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Get Started
-          </button>
-        </div>
-      </section>
-      <section
-        className={
-          `w-full py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00BFFF]'}`
-        }
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-8 text-center" id="upcoming" style={{ color: '#FFF' }}>Upcoming Webinars</h2>
-          {webinars.length > 0 ? (
-            <div className="grid  lg:grid-cols-3 gap-8">
-              {webinars.map((webinar, idx) => (
-                <div key={idx} className={
-                  `rounded-xl shadow p-6 flex flex-col items-center ` +
-                  (theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]')
-                }>
-                  <h3 className="text-xl font-semibold mb-2" style={{ color: '#00BFFF' }}>{webinar.title}</h3>
-                  <div className={theme === 'dark' ? 'text-gray-400 mb-2' : 'text-gray-600 mb-2'}>{webinar.date}</div>
-                  <div className={theme === 'dark' ? 'text-gray-400 mb-2' : 'text-gray-600 mb-2'}>{webinar.time}</div>
-                  <div className={theme === 'dark' ? 'text-gray-200 mb-4' : 'text-gray-800 mb-4'}>{webinar.description}</div>
-                  <button
-                    className={
-                      `${theme === 'dark' ? 'bg-[#00BFFF] text-white hover:bg-blue-400' : 'bg-[#00BFFF] text-white hover:bg-blue-500'} px-4 py-2 rounded mb-2 transition-colors`
-                    }
-                    onClick={() => setShowRegister(idx)}
-                  >
-                    Register
-                  </button>
-                  {showRegister === idx && (
-                    <form className="w-full mt-2 space-y-2" onSubmit={e => handleRegisterSubmit(e, webinar)}>
-                      <input
-                        type="text"
-                        name="name"
-                        value={registerForm.name}
-                        onChange={handleRegisterInput}
-                        placeholder="Your Name"
-                        className={
-                          `border rounded px-3 py-2 w-full ` +
-                          (theme === 'dark' ? 'bg-[#181818] text-white border-[#00BFFF]' : 'bg-white text-black border-gray-300')
-                        }
-                        required
-                      />
-                      <input
-                        type="email"
-                        name="email"
-                        value={registerForm.email}
-                        onChange={handleRegisterInput}
-                        placeholder="Your Email"
-                        className={
-                          `border rounded px-3 py-2 w-full ` +
-                          (theme === 'dark' ? 'bg-[#181818] text-white border-[#00BFFF]' : 'bg-white text-black border-gray-300')
-                        }
-                        required
-                      />
-                      <div className="flex gap-2">
-                        <button type="submit" className={
-                          `${theme === 'dark' ? 'bg-[#00BFFF] text-white hover:bg-blue-400' : 'bg-[#00BFFF] text-white hover:bg-blue-500'} rounded px-4 py-2 transition-colors`
-                        }>Submit</button>
-                        <button type="button" className={
-                          `${theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-300 text-black hover:bg-gray-400'} rounded px-4 py-2 transition-colors`
-                        } onClick={() => setShowRegister(null)}>Cancel</button>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className={theme === 'dark' ? 'text-gray-400 text-center' : 'text-gray-500 text-center'}>No upcoming webinars at the moment.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Special Offers Section */}
-      <section
-        className={
-          `w-full py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`
-        }
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4" style={{ color: '#00BFFF' }}>Special Offers</h2>
-          <p className={theme === 'dark' ? 'text-gray-200 mb-12' : 'text-gray-700 mb-12'}>
-            Grab these limited-time offers to accelerate your learning and make the most of your education journey.
-          </p>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {offers.map((offer, index) => (
-              <div
-                key={index}
-                className={`rounded-2xl p-8 shadow-lg hover:scale-105 transform transition text-white ` +
-                  (theme === 'dark' ? 'bg-[#00BFFF]' : offer.bg)}
-              >
-                <h3 className="text-2xl font-semibold mb-4">{offer.title}</h3>
-                <p className="text-md">{offer.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section
-        className={
-          `w-full py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00bfff]'}`
-        }
-      >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid text-justify lg:grid-cols-2 gap-12 items-center">
-        {/* Left Side Content */}
-        <div>
-          <h2
-            className="text-3xl font-bold mb-4"
-            style={{ color: theme === 'dark' ? '#00BFFF' : '#fff' }}
-          >
-            Our Impactful Insights
-          </h2>
-          <p className={theme === 'dark' ? 'text-gray-200 mb-6' : 'text-gray-700 mb-6'} >
-            We are proud of the results we deliver for learners worldwide. Our platform is designed to empower students and professionals to achieve their learning goals efficiently.
-          </p>
-          <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}>
-            From expert instructors to a wide range of courses, interactive learning, and consistent student satisfaction, our metrics reflect our commitment to quality education.
-          </p>
-        </div>
-
-        {/* Right Side Cards */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {insights.map((insight, index) => (
-            <div key={index} className={`p-6 rounded-2xl shadow hover:shadow-lg transition text-center ` + (theme === 'dark' ? 'bg-[#181818]' : 'bg-white')}>
-              <h3 className="text-4xl font-bold" style={{ color: '#00BFFF' }}>{insight.title}</h3>
-              <p className={theme === 'dark' ? 'text-gray-200 mt-2' : 'text-gray-700 mt-2'}>{insight.subtitle}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <section
-      className={
-        `w-full py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#e6f7ff]'}`
-      }
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <h2
-          className={`text-3xl font-bold text-center mb-4 ${theme === 'dark' ? 'text-white' : 'text-black'}`}
+    <div className="grid  sm:grid-cols-2 md:grid-cols-4 gap-8">
+      {[
+        { img: special1, title: "Special 1" },
+        { img: special2, title: "Special 2" },
+        { img: special3, title: "Special 3" },
+        { img: special4, title: "Special 4" },
+      ].map((dish, index) => (
+        <div
+          key={index}
+          className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transform transition duration-300"
         >
-          Partnered with <span style={{ color: '#00BFFF' }}>Top Institutions</span> to produce
-          <span style={{ color: '#00BFFF' }}> Best Quality Education</span> content for Free
-        </h2>
-        <p className={theme === 'dark' ? 'text-gray-200 mb-12' : 'text-gray-700 mb-12'}>
-          We collaborate with industry-leading organizations to deliver the best learning experience.
-        </p>
-
-        <div className="overflow-hidden relative">
-          <div
-            className="flex animate-logo-scroll"
-            style={{ width: `${logos.length * 2 * 120}px` }}
-          >
-            {/* Duplicate logos for seamless infinite scroll */}
-            {logos.concat(logos).map((logo, index) => (
-              <div key={index} className="flex-shrink-0 px-6" style={{ width: '120px' }}>
-                <img
-                  src={logo}
-                  alt={`Partner ${index + 1}`}
-                  className="h-20 object-contain transition-transform duration-300 hover:scale-110"
-                />
-              </div>
-            ))}
+          <img
+            src={dish.img}
+            alt={dish.title}
+            className="w-full h-80 object-cover"
+          />
+          <div className="p-4 text-center">
+            <span className="text-gray-900 text-lg font-serif">{dish.title}</span>
           </div>
         </div>
-        <style>{`
-          @keyframes logo-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-logo-scroll {
-            animation: logo-scroll 30s linear infinite;
-          }
-        `}</style>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+			{/* Heritage & Legacy Section */}
+           <section className="w-full bg-red-50 py-20 px-4 md:px-0 flex flex-col items-center justify-center">
+  <div className="max-w-6xl w-full mx-auto grid  md:grid-cols-2 gap-10 items-center">
+    
+    {/* Left: Heritage Image */}
+    <div className="w-full h-full min-h-[340px]">
+      <img
+        src={heritage}
+        alt="Heritage & Legacy"
+        className="rounded-2xl shadow-lg w-full h-full min-h-[260px] object-cover"
+      />
+    </div>
+
+    {/* Right: Content */}
+    <div className="grid gap-4 h-full min-h-[340px] content-center">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-serif">
+        Heritage & Legacy
+      </h2>
+      <p className="text-lg text-gray-700 max-w-lg">
+        Our restaurant's journey began decades ago, rooted in a passion for
+        authentic flavors and heartfelt hospitality. From humble beginnings to a
+        celebrated culinary destination, our legacy is built on tradition,
+        innovation, and a commitment to excellence. Every dish tells a story—of
+        family, culture, and the joy of sharing great food.
+      </p>
+      <ul className="space-y-2 text-gray-700">
+        <li>Established in 1985, serving generations of food lovers</li>
+        <li>Family-owned and operated with pride</li>
+        <li>Honoring traditional recipes with a modern twist</li>
+        <li>Recognized for excellence in taste and service</li>
+      </ul>
+      <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+        Learn More
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+			{/* Meet Our Professionals Section */}
+			<section className="w-full bg-white py-20 px-4 md:px-0 flex flex-col items-center justify-center">
+				<h2 className="text-5xl md:text-6xl font-serif font-bold text-black text-center mb-16">Meet Our Professionals</h2>
+				<div className="max-w-6xl w-full mx-auto grid  md:grid-cols-3 gap-12">
+					{/* Chef 1 */}
+					<div className="flex flex-col items-center">
+						<img src={chef1} alt="Gordon Ramsay" className="w-full h-96 object-cover rounded-lg shadow-lg mb-6" />
+						<h3 className="text-2xl font-serif font-semibold text-black mb-1">Gordon Ramsay</h3>
+						<span className="text-lg text-black font-serif mb-2">Chef</span>
+					</div>
+					{/* Chef 2 with social icons */}
+					<div className="flex flex-col items-center relative">
+						<img src={chef3} alt="Dominique Crenn" className="w-full h-96 object-cover rounded-lg shadow-lg mb-6" />
+						{/* Social icons */}
+						<div className="absolute left-4 top-10 flex flex-col gap-4 z-10">
+							<a href="#" className="text-white hover:text-yellow-300 text-2xl"><i className="fab fa-twitter"></i></a>
+							<a href="#" className="text-white hover:text-yellow-300 text-2xl"><i className="fab fa-facebook"></i></a>
+							<a href="#" className="text-white hover:text-yellow-300 text-2xl"><i className="fab fa-instagram"></i></a>
+							<a href="#" className="text-white hover:text-yellow-300 text-2xl"><i className="fab fa-whatsapp"></i></a>
+						</div>
+						<h3 className="text-2xl font-serif font-semibold text-black mb-1">Dominique Crenn</h3>
+						<span className="text-lg text-black font-serif mb-2">Chef</span>
+					</div>
+					{/* Chef 3 */}
+					<div className="flex flex-col items-center">
+						<img src={chef2} alt="Auguste Escoffier" className="w-full h-96 object-cover rounded-lg shadow-lg mb-6" />
+						<h3 className="text-2xl font-serif font-semibold text-black mb-1">Auguste Escoffier</h3>
+						<span className="text-lg text-black font-serif mb-2">Chef</span>
+					</div>
+				</div>
+			</section>
+
+			{/* Live Events & Dining Nights Section */}
+			<section className="w-full bg-red-50 py-20 px-4 md:px-0 flex flex-col items-center justify-center">
+  <div className="max-w-6xl w-full mx-auto">
+    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 font-serif text-center">
+      Live Events & Dining Nights
+    </h2>
+
+    <div className="grid  md:grid-cols-3 gap-8 items-stretch">
+      {/* Left Card: Music Night */}
+      <div className="grid gap-4 bg-white rounded-lg shadow-lg p-6 text-center">
+        <img
+          src={buffet1}
+          alt="Music Night"
+          className="w-full h-56 object-cover rounded"
+        />
+        <span className="text-lg font-serif font-semibold text-gray-900">
+          Music Nights
+        </span>
       </div>
 
-      {/* No animation */}
-    </section>
+      {/* Middle Card: Info */}
+      <div className="grid gap-4 bg-red-50 rounded-lg shadow-lg p-8 border-2 border-red-200 text-center">
+        <h3 className="text-2xl font-serif font-bold text-red-600">
+          Unforgettable Evenings
+        </h3>
+        <p className="text-gray-700">
+          Join us for vibrant live music nights, themed buffets, and exclusive
+          dining experiences. Our events bring together great food,
+          entertainment, and a lively atmosphere for all ages.
+        </p>
+        <ul className="text-gray-700 space-y-2">
+          <li>Weekly live music performances</li>
+          <li>Rotating buffet themes</li>
+          <li>Special guest appearances</li>
+          <li>Family-friendly fun</li>
+        </ul>
+        <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+          See Upcoming Events
+        </button>
+      </div>
 
-
-      {/* Upcoming Webinars Section */}
-      
-
-      <section
-        className={`w-full py-16 flex items-center justify-center ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#00BFFF]'}`}
-      >
-        <div className="max-w-2xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-bold mb-4" style={{ color: theme === 'dark' ? '#fff' : '#fff' }}>Ready to Transform Your Career?</h2>
-          <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-white' : 'text-white'}`}>Join thousands of learners who have upskilled and advanced their careers with our expert-led online courses. Start your journey today!</p>
-          <Link
-            to="/contactus"
-            className={`inline-block font-semibold px-8 py-4 rounded-lg shadow transition-colors text-xl ${theme === 'dark' ? 'bg-white text-[#00BFFF] hover:bg-gray-200' : 'bg-white text-[#00BFFF] hover:bg-blue-100'}`}
-          >
-            Get Started
-          </Link>
-        </div>
-      </section>
+      {/* Right Card: Buffet Theme */}
+      <div className="grid gap-4 bg-white rounded-lg shadow-lg p-6 text-center">
+        <img
+          src={buffet2}
+          alt="Buffet Theme"
+          className="w-full h-56 object-cover rounded"
+        />
+        <span className="text-lg font-serif font-semibold text-gray-900">
+          Buffet Themes
+        </span>
+      </div>
     </div>
-  );
+  </div>
+</section>
+
+			
+			{/* Meet Our Professionals Section */}
+			
+			{/* CTA Section */}
+			<section className="w-full bg-white py-16 px-4 md:px-0 flex flex-col items-center justify-center">
+				<div className="max-w-3xl w-full mx-auto flex flex-col items-center justify-center">
+					<h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-red-600">Reserve Your Table or Order Online!</h2>
+					<p className="text-lg text-center text-gray-700 mb-8">Experience gourmet dining, chef’s specials, and unforgettable evenings at Foodify. Book your table for a special night or order your favorite dishes for home delivery. We’re here to delight your taste buds—every day!</p>
+					<div className="flex flex-row sm:flex-row gap-4">
+						<a href="#reserve" className="px-10 py-4 rounded-full text-white font-semibold text-lg shadow-lg transition bg-red-600 hover:bg-red-700">Reserve a Table</a>
+						<a href="#order" className="px-10 py-4 rounded-full text-red-600 font-semibold text-lg shadow-lg transition bg-white hover:bg-red-100 border border-red-600">Order Online</a>
+					</div>
+				</div>
+			</section>
+			
+		</div>
+	);
 }
