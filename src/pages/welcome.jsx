@@ -83,7 +83,6 @@ export default function LoginPage() {
   const handleForgot = (e) => {
     e.preventDefault();
     if (forgotStep === 1) {
-      // Check if email exists
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const user = users.find((u) => u.email === forgotEmail);
       if (!user) {
@@ -96,7 +95,6 @@ export default function LoginPage() {
       setError("");
       setMessage("");
     } else if (forgotStep === 2) {
-      // Validate passwords
       if (!newPassword || !confirmPassword) {
         setError("Please enter and confirm your new password.");
         return;
@@ -105,7 +103,6 @@ export default function LoginPage() {
         setError("Passwords do not match.");
         return;
       }
-      // Update password in localStorage
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const idx = users.findIndex((u) => u.email === forgotEmail);
       if (idx !== -1) {
@@ -192,7 +189,7 @@ export default function LoginPage() {
                 <label className="block text-white mb-1">First Name</label>
                 <input
                   type="text"
-                  className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                  className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                   value={regFirstName}
                   onChange={(e) => setRegFirstName(e.target.value)}
                   required
@@ -202,7 +199,7 @@ export default function LoginPage() {
                 <label className="block text-white mb-1">Last Name</label>
                 <input
                   type="text"
-                  className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                  className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                   value={regLastName}
                   onChange={(e) => setRegLastName(e.target.value)}
                   required
@@ -213,7 +210,7 @@ export default function LoginPage() {
               <label className="block text-white mb-1">Email</label>
               <input
                 type="email"
-                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                 value={regEmail}
                 onChange={(e) => setRegEmail(e.target.value)}
                 required
@@ -223,7 +220,7 @@ export default function LoginPage() {
               <label className="block text-white mb-1">Password</label>
               <input
                 type="password"
-                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                 value={regPassword}
                 onChange={(e) => setRegPassword(e.target.value)}
                 required
@@ -245,7 +242,7 @@ export default function LoginPage() {
                   <label className="block text-white mb-1">Email</label>
                   <input
                     type="email"
-                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
                     required
@@ -265,7 +262,7 @@ export default function LoginPage() {
                   <label className="block text-white mb-1">New Password</label>
                   <input
                     type="password"
-                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
@@ -275,7 +272,7 @@ export default function LoginPage() {
                   <label className="block text-white mb-1">Confirm Password</label>
                   <input
                     type="password"
-                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
