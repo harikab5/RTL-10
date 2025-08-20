@@ -146,41 +146,29 @@ export default function UserDetailsSection() {
 
       {/* User Signup Table Section */}
       <div className={clsx(
-        "rounded-xl shadow p-6 mt-16",
-        theme === "dark" ? "bg-[#181f2a]" : "bg-white"
+        "rounded-xl shadow p-6 mt-16 bg-white text-black border border-red-500"
       )}>
-        <h2 className={clsx(
-          "text-2xl font-bold mb-4",
-          "text-red-500"
-        )}>User Signup Details</h2>
+        <h2 className="text-2xl font-bold mb-4 text-red-600">User Signup Details</h2>
         {signupDetails.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className={clsx(
-              "min-w-full border rounded-lg",
-              theme === "dark" ? "border-gray-700" : "border-gray-200"
-            )}>
-              <thead className={clsx(
-                "text-white",
-                theme === "dark" ? "bg-[#005f8f]" : "bg-red-500"
-              )}>
+            <table className="min-w-full border rounded-lg border-red-500">
+              <thead className="bg-red-500 text-white">
                 <tr>
                   <th className="px-4 py-2 text-center">S.No</th>
                   <th className="px-4 py-2 text-center">First Name</th>
                   <th className="px-4 py-2 text-center">Last Name</th>
                   <th className="px-4 py-2 text-center">Email</th>
-                  <th className="px-4 py-2 text-center">Phone</th>
                   <th className="px-4 py-2 text-center">Signup Time</th>
                   <th className="px-4 py-2 text-center">Signup Date</th>
                 </tr>
               </thead>
               <tbody>
                 {signupDetails.map((user, idx) => (
-                  <tr key={user.email || idx} className={clsx("border-b", theme === "dark" ? "border-[#005f8f]" : "border-red-500") }>
+                  <tr key={user.email || idx} className="border-b border-red-200">
                     <td className="px-4 py-2 text-center">{idx + 1}</td>
                     <td className="px-4 py-2 text-center">{user.firstName}</td>
                     <td className="px-4 py-2 text-center">{user.lastName}</td>
                     <td className="px-4 py-2 text-center">{user.email}</td>
-                    <td className="px-4 py-2 text-center">{user.phone}</td>
                     <td className="px-4 py-2 text-center">{user.signupTime}</td>
                     <td className="px-4 py-2 text-center">{user.signupDate}</td>
                   </tr>
@@ -189,96 +177,92 @@ export default function UserDetailsSection() {
             </table>
           </div>
         ) : (
-          <p className={clsx(theme === "dark" ? "text-gray-400" : "text-gray-500")}>No user signup details found.</p>
+          <p className="text-gray-500">No user signup details found.</p>
         )}
       </div>
 
 
-      <div className="max-w-7xl mx-auto p-6 space-y-12">
-
-      {/* 1. Revenue Overview */}
-      <div className="bg-white p-6 rounded-2xl shadow">
-        <h2 className="text-xl font-semibold mb-4">Revenue Overview (Weekly)</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={revenueData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="revenue" stroke="#ef4444" strokeWidth={3} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* 2. Popular Dishes */}
-      <div className="bg-white p-6 rounded-2xl shadow">
-        <h2 className="text-xl font-semibold mb-4">Popular Dishes</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={ordersData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="dish" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="orders" fill="#f97316" radius={[8, 8, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* 3. Reservations Trend */}
-     
-
-      {/* 4. Customer Growth */}
-       <div className="grid md:grid-cols-2 gap-6">
-        {/* Reservations Trend */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h2 className="text-xl font-semibold mb-4">Reservations by Time</h2>
+  <div className="max-w-7xl mx-auto p-6 space-y-12">
+        {/* 1. Revenue Overview */}
+        <div className="p-6 rounded-2xl shadow bg-white text-black border border-red-500">
+          <h2 className="text-xl font-semibold mb-4 text-red-600">Revenue Overview (Weekly)</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={reservationsData}>
-              <defs>
-                <linearGradient id="colorTables" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="time" />
-              <YAxis />
+            <LineChart data={revenueData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
-              <Area type="monotone" dataKey="tables" stroke="#3b82f6" fill="url(#colorTables)" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Customer Growth */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <h2 className="text-xl font-semibold mb-4">Customer Growth (Monthly)</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={customersData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="day" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="customers" stroke="#22c55e" strokeWidth={3} />
+              <Legend />
+              <Line type="monotone" dataKey="revenue" stroke="#ef4444" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>
-      </div>
 
-      {/* 6. Deals Performance */}
-      <div className="bg-white p-6 rounded-2xl shadow">
-        <h2 className="text-xl font-semibold mb-4">Deals Performance</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dealsData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="deal" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="redemptions" fill="#8b5cf6" radius={[8, 8, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        {/* 2. Popular Dishes */}
+        <div className="p-6 rounded-2xl shadow bg-white text-black border border-red-500">
+          <h2 className="text-xl font-semibold mb-4 text-red-600">Popular Dishes</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={ordersData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="dish" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="orders" fill="#ef4444" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* 3. Reservations Trend & 4. Customer Growth */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Reservations Trend */}
+          <div className="p-6 rounded-2xl shadow bg-white text-black border border-red-500">
+            <h2 className="text-xl font-semibold mb-4 text-red-600">Reservations by Time</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={reservationsData}>
+                <defs>
+                  <linearGradient id="colorTables" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="time" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="tables" stroke="#ef4444" fill="url(#colorTables)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Customer Growth */}
+          <div className="p-6 rounded-2xl shadow bg-white text-black border border-red-500">
+            <h2 className="text-xl font-semibold mb-4 text-red-600">Customer Growth (Monthly)</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={customersData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="customers" stroke="#ef4444" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* 6. Deals Performance */}
+        <div className="p-6 rounded-2xl shadow bg-white text-black border border-red-500">
+          <h2 className="text-xl font-semibold mb-4 text-red-600">Deals Performance</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={dealsData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="deal" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="redemptions" fill="#ef4444" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
-    </div>
 
       {/* Instructor Details Table Section */}
       
