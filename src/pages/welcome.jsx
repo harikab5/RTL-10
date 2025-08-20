@@ -1,8 +1,3 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUser, FaLock } from "react-icons/fa";
-import bgImage from "../assets/welcome.jpg.jpg";
-import logoImage from "../assets/logo.png";
 
 export default function LoginPage() {
   const [form, setForm] = useState("login");
@@ -13,6 +8,10 @@ export default function LoginPage() {
   const [regFirstName, setRegFirstName] = useState("");
   const [regLastName, setRegLastName] = useState("");
   const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotStep, setForgotStep] = useState(1); // 1: enter email, 2: new password
+  const [foundForgotUser, setFoundForgotUser] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -21,6 +20,9 @@ export default function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
     if (email === "admin@enkonix.in" && password === "admin123") {
+      localStorage.setItem('firstname', 'Admin');
+      localStorage.setItem('lastname', 'User');
+      localStorage.setItem('email', email);
       navigate("/admindashboard");
       return;
     }
@@ -30,6 +32,9 @@ export default function LoginPage() {
       (u) => (u.email === email || u.name === email) && u.password === password
     );
     if (foundUser) {
+      localStorage.setItem('firstname', foundUser.firstName || '');
+      localStorage.setItem('lastname', foundUser.lastName || '');
+      localStorage.setItem('email', foundUser.email || '');
       navigate("/home1");
     } else {
       setError("Invalid credentials. Please try again.");
@@ -50,14 +55,23 @@ export default function LoginPage() {
       setRegLastName("");
       return;
     }
-    // Add new user
+    // Add new user with signup time and date
+    const now = new Date();
+    const signupTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const signupDate = now.toLocaleDateString();
     users.push({
       firstName: regFirstName,
       lastName: regLastName,
       email: regEmail,
       password: regPassword,
+      signupTime,
+      signupDate,
     });
     localStorage.setItem("users", JSON.stringify(users));
+    // Set for avatar initials immediately after registration
+    localStorage.setItem('firstname', regFirstName);
+    localStorage.setItem('lastname', regLastName);
+    localStorage.setItem('email', regEmail);
     setMessage("Registration successful! Please login.");
     setForm("login");
     setRegEmail("");
@@ -68,9 +82,46 @@ export default function LoginPage() {
 
   const handleForgot = (e) => {
     e.preventDefault();
-    setMessage("Password reset link sent to your email.");
-    setForm("login");
-    setForgotEmail("");
+    if (forgotStep === 1) {
+      // Check if email exists
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const user = users.find((u) => u.email === forgotEmail);
+      if (!user) {
+        setError("Email not found. Please register.");
+        setMessage("");
+        return;
+      }
+      setFoundForgotUser(user);
+      setForgotStep(2);
+      setError("");
+      setMessage("");
+    } else if (forgotStep === 2) {
+      // Validate passwords
+      if (!newPassword || !confirmPassword) {
+        setError("Please enter and confirm your new password.");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+      // Update password in localStorage
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const idx = users.findIndex((u) => u.email === forgotEmail);
+      if (idx !== -1) {
+        users[idx].password = newPassword;
+        localStorage.setItem("users", JSON.stringify(users));
+        setMessage("Password updated successfully! Please login.");
+        setForm("login");
+        setForgotEmail("");
+        setForgotStep(1);
+        setNewPassword("");
+        setConfirmPassword("");
+        setError("");
+      } else {
+        setError("Unexpected error. Please try again.");
+      }
+    }
   };
 
   return (
@@ -138,7 +189,7 @@ export default function LoginPage() {
           <form onSubmit={handleRegister} className="space-y-5">
             <div className="flex gap-2">
               <div className="flex-1">
-                <label className="block text-gray-700 mb-1">First Name</label>
+                <label className="block text-white mb-1">First Name</label>
                 <input
                   type="text"
                   className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -148,7 +199,7 @@ export default function LoginPage() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-gray-700 mb-1">Last Name</label>
+                <label className="block text-white mb-1">Last Name</label>
                 <input
                   type="text"
                   className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -159,7 +210,7 @@ export default function LoginPage() {
               </div>
             </div>
             <div>
-              <label className="block text-gray-700 mb-1">Email</label>
+              <label className="block text-white mb-1">Email</label>
               <input
                 type="email"
                 className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -169,7 +220,7 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-1">Password</label>
+              <label className="block text-white mb-1">Password</label>
               <input
                 type="password"
                 className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -188,22 +239,57 @@ export default function LoginPage() {
         )}
         {form === "forgot" && (
           <form onSubmit={handleForgot} className="space-y-5">
-            <div>
-              <label className="block text-gray-700 mb-1">Email</label>
-              <input
-                type="email"
-                className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
-                value={forgotEmail}
-                onChange={(e) => setForgotEmail(e.target.value)}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
-            >
-              Send Reset Link
-            </button>
+            {forgotStep === 1 && (
+              <>
+                <div>
+                  <label className="block text-white mb-1">Email</label>
+                  <input
+                    type="email"
+                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    value={forgotEmail}
+                    onChange={(e) => setForgotEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
+                >
+                  Next
+                </button>
+              </>
+            )}
+            {forgotStep === 2 && (
+              <>
+                <div>
+                  <label className="block text-white mb-1">New Password</label>
+                  <input
+                    type="password"
+                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-white mb-1">Confirm Password</label>
+                  <input
+                    type="password"
+                    className="w-full border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
+                >
+                  Update Password
+                </button>
+              </>
+            )}
+            {error && <div className="text-red-400 text-sm text-center">{error}</div>}
           </form>
         )}
         {/* Only show Register and Forgot Password for login form, else show Back to Login */}
@@ -241,3 +327,8 @@ export default function LoginPage() {
     </div>
   );
 }
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUser, FaLock } from "react-icons/fa";
+import bgImage from "../assets/welcome.jpg.jpg";
+import logoImage from "../assets/logo.png";
