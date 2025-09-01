@@ -1,3 +1,135 @@
+// Translation object for Contact page
+const translations = {
+  en: {
+    heroTitle: "Get in <span class='text-red-500'>Touch</span> Today",
+    heroDesc: "Serving <span class='text-white font-semibold'>flavors</span>, delivering <span class='text-white font-semibold'>happiness</span> — enjoy every bite with us.",
+    supportHeading: "Meet Our Support Team",
+    cards: [
+      { title: "Visit Us", text: "123 Business Street, Suite 100, YourCity" },
+      { title: "Email Us", text: "stackly.com" },
+      { title: "Customer Care", text: "+1 (800) 123-4567" },
+    ],
+    getInTouch: "Get in Touch",
+    needHelp: "Need help? <span class='text-red-500'>Let's get in touch</span>",
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email",
+    phone: "Phone",
+    message: "Write a Message",
+    send: "Send Message",
+    submitted: "Submitted!",
+    submitSuccess: "Submitted successfully!",
+    location: "Location",
+    howToReach: "How to Reach Our Location",
+    faqSmall: "Frequently Asked Questions",
+    faqTitle: "Got <span class='text-red-500'>Questions?</span> We've Got Answers",
+    stayUpdated: "Stay Updated",
+    newsletterDesc: "Subscribe to our newsletter and never miss our latest news, updates, and special offers.",
+    subscribe: "Subscribe",
+    subscribed: "Subscribed!",
+    subscribeSuccess: "Subscribed successfully!",
+    faqs: [
+      { q: "How do I place an order online?", a: "You can easily order through our website or mobile app by browsing the menu, selecting your dishes, and checking out securely." },
+      { q: "Do you offer home delivery?", a: "Yes, we provide fast and reliable home delivery to your doorstep within our service area." },
+      { q: "Can I customize my order?", a: "Absolutely! You can add special instructions, choose spice levels, and request add-ons while placing your order." },
+      { q: "What areas do you deliver to?", a: "We currently deliver across major parts of the city. You can check delivery availability by entering your location at checkout." },
+      { q: "Do you offer special deals or discounts?", a: "Yes, we regularly run promotions, combo offers, and discounts. Keep an eye on our website or app for the latest deals." },
+    ],
+  },
+  ar: {
+    heroTitle: "تواصل معنا <span class='text-red-500'>اليوم</span>",
+    heroDesc: "نقدم <span class='text-white font-semibold'>أشهى النكهات</span>، ونوصّل <span class='text-white font-semibold'>السعادة</span> — استمتع بكل لقمة معنا.",
+    supportHeading: "فريق الدعم لدينا",
+    cards: [
+      { title: "زرنا", text: "123 شارع الأعمال، جناح 100، مدينتك" },
+      { title: "راسلنا عبر البريد", text: "stackly.com" },
+      { title: "خدمة العملاء", text: "+1 (800) 123-4567" },
+    ],
+    getInTouch: "تواصل معنا",
+    needHelp: "تحتاج مساعدة؟ <span class='text-red-500'>تواصل معنا الآن</span>",
+    firstName: "الاسم الأول",
+    lastName: "اسم العائلة",
+    email: "البريد الإلكتروني",
+    phone: "رقم الهاتف",
+    message: "اكتب رسالتك",
+    send: "إرسال الرسالة",
+    submitted: "تم الإرسال!",
+    submitSuccess: "تم الإرسال بنجاح!",
+    location: "الموقع",
+    howToReach: "كيفية الوصول إلى موقعنا",
+    faqSmall: "الأسئلة الشائعة",
+    faqTitle: "هل لديك <span class='text-red-500'>أسئلة؟</span> لدينا الإجابات",
+    stayUpdated: "ابقَ على اطلاع",
+    newsletterDesc: "اشترك في نشرتنا الإخبارية ولا تفوت آخر الأخبار والعروض الخاصة.",
+    subscribe: "اشترك",
+    subscribed: "تم الاشتراك!",
+    subscribeSuccess: "تم الاشتراك بنجاح!",
+    faqs: [
+      { q: "كيف أطلب عبر الإنترنت؟", a: "يمكنك الطلب بسهولة من خلال موقعنا أو تطبيقنا باختيار الأطباق وإتمام الدفع بأمان." },
+      { q: "هل تقدمون خدمة التوصيل للمنزل؟", a: "نعم، نقدم توصيل سريع وموثوق إلى باب منزلك ضمن منطقة الخدمة." },
+      { q: "هل يمكنني تخصيص طلبي؟", a: "بكل تأكيد! يمكنك إضافة تعليمات خاصة، واختيار مستوى التوابل، وطلب الإضافات أثناء الطلب." },
+      { q: "ما هي المناطق التي توصلون إليها؟", a: "نقوم بالتوصيل حاليًا لمعظم مناطق المدينة. يمكنك التحقق من التوصيل بإدخال موقعك عند الدفع." },
+      { q: "هل لديكم عروض أو خصومات خاصة؟", a: "نعم، نقدم عروض وخصومات بشكل منتظم. تابع موقعنا أو تطبيقنا لأحدث العروض." },
+    ],
+  },
+  he: {
+    heroTitle: "צור <span class='text-red-500'>קשר</span> היום",
+    heroDesc: "מגישים <span class='text-white font-semibold'>טעמים</span>, מביאים <span class='text-white font-semibold'>שמחה</span> — תהנה מכל ביס איתנו.",
+    supportHeading: "צוות התמיכה שלנו",
+    cards: [
+      { title: "בקר אותנו", text: "123 רחוב העסקים, קומה 100, העיר שלך" },
+      { title: "שלח לנו מייל", text: "stackly.com" },
+      { title: "שירות לקוחות", text: "+1 (800) 123-4567" },
+    ],
+    getInTouch: "צור קשר",
+    needHelp: "צריך עזרה? <span class='text-red-500'>צור קשר עכשיו</span>",
+    firstName: "שם פרטי",
+    lastName: "שם משפחה",
+    email: "אימייל",
+    phone: "טלפון",
+    message: "כתוב הודעה",
+    send: "שלח הודעה",
+    submitted: "נשלח!",
+    submitSuccess: "נשלח בהצלחה!",
+    location: "מיקום",
+    howToReach: "איך להגיע אלינו",
+    faqSmall: "שאלות נפוצות",
+    faqTitle: "יש <span class='text-red-500'>שאלות?</span> יש לנו תשובות",
+    stayUpdated: "הישאר מעודכן",
+    newsletterDesc: "הירשם לניוזלטר שלנו ואל תפספס חדשות, עדכונים ומבצעים.",
+    subscribe: "הירשם",
+    subscribed: "נרשמת!",
+    subscribeSuccess: "נרשמת בהצלחה!",
+    faqs: [
+      { q: "איך מבצעים הזמנה אונליין?", a: "ניתן להזמין בקלות דרך האתר או האפליקציה על ידי בחירת מנות ותשלום מאובטח." },
+      { q: "האם יש משלוח לבית?", a: "כן, אנו מספקים משלוח מהיר ואמין עד הבית באזור השירות שלנו." },
+      { q: "אפשר להתאים את ההזמנה?", a: "בהחלט! אפשר להוסיף הוראות מיוחדות, לבחור רמת חריפות ולבקש תוספות בהזמנה." },
+      { q: "לאילו אזורים אתם מגיעים?", a: "אנחנו מגיעים לרוב חלקי העיר. ניתן לבדוק זמינות משלוח לפי מיקום בקופה." },
+      { q: "יש מבצעים או הנחות?", a: "כן, יש לנו מבצעים והנחות באופן קבוע. עקבו אחרי האתר או האפליקציה לעדכונים." },
+    ],
+  },
+};
+  // Language state synced with Header (live update)
+  const [language, setLanguage] = React.useState('en');
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedLang = localStorage.getItem('language') || 'en';
+      setLanguage(storedLang);
+      const handleLangChange = () => {
+        const newLang = localStorage.getItem('language') || 'en';
+        setLanguage(newLang);
+      };
+      window.addEventListener('language-changed', handleLangChange);
+      window.addEventListener('storage', handleLangChange);
+      return () => {
+        window.removeEventListener('language-changed', handleLangChange);
+        window.removeEventListener('storage', handleLangChange);
+      };
+    }
+  }, []);
+
+  // Set RTL/LTR direction
+  const dir = language === 'ar' || language === 'he' ? 'rtl' : 'ltr';
 import React, { useState } from "react";
 import contactVideo from "../assets/contact.mp4"; 
 import contact1 from "../assets/contact1.jpg";
@@ -78,7 +210,7 @@ export default function ContactHero() {
   }, []);
 
   return (
-    <div className={theme === 'dark' ? 'min-h-screen text-white' : 'min-h-screen  text-black'}>
+  <div className={theme === 'dark' ? 'min-h-screen text-white' : 'min-h-screen  text-black'} dir={dir}>
       {/* Hero Section */}
       <section className={`relative h-screen flex items-center justify-center ${theme === 'dark' ? '' : ''}`}> 
         {/* Background video */}
@@ -97,15 +229,10 @@ export default function ContactHero() {
         <div className={theme === 'dark' ? 'absolute inset-0 bg-black/60 -z-10' : 'absolute inset-0 bg-black/40 -z-10'}></div>
 
         {/* Content */}
-        <div className={`relative text-center px-4 max-w-2xl ${theme === 'dark' ? 'text-white' : 'text-white'}`}> 
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-            Get in <span className="text-red-500">Touch</span> Today
-          </h1>
-          <p className="text-lg md:text-2xl font-light mb-6">
-  Serving <span className="text-white font-semibold">flavors</span>, 
-  delivering <span className="text-white font-semibold">happiness</span> — enjoy every bite with us.
-</p>
-
+        <div className={`relative text-center px-4 max-w-2xl ${theme === 'dark' ? 'text-white' : 'text-white'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight" dangerouslySetInnerHTML={{ __html: translations[language].heroTitle }} />
+          <p className="text-lg md:text-2xl font-light mb-6" dangerouslySetInnerHTML={{ __html: translations[language].heroDesc }} />
         </div>
       </section>
 
@@ -113,24 +240,24 @@ export default function ContactHero() {
       <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}> 
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Heading */}
-        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${theme === 'dark' ? 'text-red-500' : 'text-black'}`}> 
-          Meet Our Support Team
+        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${theme === 'dark' ? 'text-red-500' : 'text-black'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].supportHeading}
         </h2>
         {/* Cards Grid */}
         <div className="grid gap-10 md:grid-cols-3">
-          {cards.map((card, index) => (
+          {translations[language].cards.map((card, index) => (
             <div
               key={index}
               className={`${theme === 'dark' ? 'bg-[#181818] text-white' : 'bg-white text-black'} rounded-2xl shadow-md hover:shadow-xl transition text-center p-6`}
+              style={dir === 'rtl' ? { direction: 'rtl' } : {}}
             >
               <img
-                src={card.img}
+                src={cards[index].img}
                 alt={card.title}
                 className="w-full h-56 object-cover rounded-xl mb-6"
               />
-              <h3 className="text-xl font-bold mb-2" style={{ color: 'red-500' }}>
-                {card.title}
-              </h3>
+              <h3 className="text-xl font-bold mb-2" style={{ color: 'red-500' }}>{card.title}</h3>
               <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{card.text}</p>
             </div>
           ))}
@@ -143,13 +270,13 @@ export default function ContactHero() {
       <section className={`py-20 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
       <div className="max-w-4xl mx-auto px-6">
         {/* Small Heading */}
-        <p className="text-red-500 font-semibold uppercase mb-2">
-          Get in Touch
+        <p className="text-red-500 font-semibold uppercase mb-2" style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].getInTouch}
         </p>
         {/* Main Heading */}
-        <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}` }>
-          Need help? <span className="text-red-500">Let's get in touch</span>
-        </h2>
+        <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}
+          dangerouslySetInnerHTML={{ __html: translations[language].needHelp }} />
 
         {/* Contact Form */}
         <form
@@ -162,39 +289,44 @@ export default function ContactHero() {
           <div className="grid md:grid-cols-2 gap-6">
             <input
               type="text"
-              placeholder="First Name"
+              placeholder={translations[language].firstName}
               className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+              style={dir === 'rtl' ? { direction: 'rtl' } : {}}
             />
             <input
               type="text"
-              placeholder="Last Name"
+              placeholder={translations[language].lastName}
               className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+              style={dir === 'rtl' ? { direction: 'rtl' } : {}}
             />
           </div>
           <input
             type="email"
-            placeholder="Email"
+            placeholder={translations[language].email}
             className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            style={dir === 'rtl' ? { direction: 'rtl' } : {}}
           />
           <input
             type="tel"
-            placeholder="Phone"
+            placeholder={translations[language].phone}
             className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            style={dir === 'rtl' ? { direction: 'rtl' } : {}}
           />
           <textarea
             rows="5"
-            placeholder="Write a Message"
+            placeholder={translations[language].message}
             className={`border rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-200 bg-white text-black'}`}
+            style={dir === 'rtl' ? { direction: 'rtl' } : {}}
           ></textarea>
           <button
             type="submit"
             className="w-full bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition"
             disabled={formSubmitted}
           >
-            {formSubmitted ? 'Submitted!' : 'Send Message'}
+            {formSubmitted ? translations[language].submitted : translations[language].send}
           </button>
           {formSubmitted && (
-            <div className="text-green-500 text-center font-semibold mt-4">Submitted successfully!</div>
+            <div className="text-green-500 text-center font-semibold mt-4">{translations[language].submitSuccess}</div>
           )}
         </form>
       </div>
@@ -204,13 +336,14 @@ export default function ContactHero() {
       <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Small heading */}
-        <p className="text-red-900 font-semibold uppercase mb-2">
-          Location
+        <p className="text-red-900 font-semibold uppercase mb-2" style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].location}
         </p>
 
         {/* Main heading */}
-        <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-          How to Reach Our Location
+        <h2 className={`text-3xl md:text-4xl font-extrabold mb-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].howToReach}
         </h2>
 
         {/* Map embed */}
@@ -235,12 +368,12 @@ export default function ContactHero() {
       <div className="max-w-7xl mx-auto px-6 grid  md:grid-cols-2 gap-12 items-center">
         {/* Left: Image and Heading */}
         <div>
-          <p className="text-red-500 font-semibold uppercase mb-2">
-            Frequently Asked Questions
+          <p className="text-red-500 font-semibold uppercase mb-2" style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+            {translations[language].faqSmall}
           </p>
-          <h2 className={`text-4xl md:text-5xl font-extrabold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            Got <span className="text-red-500">Questions?</span> We've Got Answers
-          </h2>
+          <h2 className={`text-4xl md:text-5xl font-extrabold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+            style={dir === 'rtl' ? { direction: 'rtl' } : {}}
+            dangerouslySetInnerHTML={{ __html: translations[language].faqTitle }} />
           <img 
             src={faqImage} 
             alt="FAQ illustration" 
@@ -251,17 +384,18 @@ export default function ContactHero() {
 
         {/* Right: Accordion */}
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index} 
+          {translations[language].faqs.map((faq, index) => (
+            <div
+              key={index}
               className={`${theme === 'dark' ? 'bg-[#222] border-gray-700' : 'bg-gray-50 border-gray-100'} rounded-xl shadow-sm border`}
+              style={dir === 'rtl' ? { direction: 'rtl' } : {}}
             >
-              <button 
+              <button
                 onClick={() => toggleFAQ(index)}
                 className={`w-full flex justify-between items-center p-6 text-left ${theme === 'dark' ? 'text-white' : ''}`}
               >
                 <span className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  {faq.question}
+                  {faq.q}
                 </span>
                 <span className="text-red-500 text-2xl">
                   {openIndex === index ? "−" : "+"}
@@ -269,7 +403,7 @@ export default function ContactHero() {
               </button>
               {openIndex === index && (
                 <div className={`px-6 pb-6 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>
-                  {faq.answer}
+                  {faq.a}
                 </div>
               )}
             </div>
@@ -282,11 +416,13 @@ export default function ContactHero() {
       <section className={`py-20 ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}>
       <div className="max-w-4xl mx-auto text-center px-6">
         {/* Heading */}
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${theme === 'dark' ? 'text-red-500' : 'text-gray-900'}`}>
-          Stay Updated
+        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${theme === 'dark' ? 'text-red-500' : 'text-gray-900'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].stayUpdated}
         </h2>
-        <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-black'}`}>
-          Subscribe to our newsletter and never miss our latest news, updates, and special offers.
+        <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-black'}`}
+          style={dir === 'rtl' ? { direction: 'rtl' } : {}}>
+          {translations[language].newsletterDesc}
         </p>
 
         {/* Form */}
@@ -297,22 +433,23 @@ export default function ContactHero() {
             setNewsletterSubmitted(true);
           }}
         >
-          <input 
-            type="email" 
-            placeholder="Enter your email" 
+          <input
+            type="email"
+            placeholder={translations[language].email}
             className={`flex-1 px-6 py-4 rounded-xl border w-full sm:w-auto focus:outline-none focus:border-red-500 ${theme === 'dark' ? 'border-gray-700 bg-[#181818] text-white' : 'border-gray-300 text-gray-800 bg-white'}`}
             disabled={newsletterSubmitted}
+            style={dir === 'rtl' ? { direction: 'rtl' } : {}}
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="bg-red-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#00] transition duration-300 w-full sm:w-auto"
             disabled={newsletterSubmitted}
           >
-            {newsletterSubmitted ? 'Subscribed!' : 'Subscribe'}
+            {newsletterSubmitted ? translations[language].subscribed : translations[language].subscribe}
           </button>
         </form>
         {newsletterSubmitted && (
-          <div className="text-green-500 text-center font-semibold mt-4">Subscribed successfully!</div>
+          <div className="text-green-500 text-center font-semibold mt-4">{translations[language].subscribeSuccess}</div>
         )}
       </div>
     </section>

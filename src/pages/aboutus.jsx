@@ -1,13 +1,119 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import aboutushero from "../assets/aboutushero.mp4";
 import special1 from "../assets/special1.jpg";
 import special2 from "../assets/special2.jpg";
 import awards from "../assets/awards.jpg";
 
+const translations = {
+  English: {
+    about: "About Us",
+    hero: "Crafting Culinary Memories, One Plate at a Time",
+    missionTitle: "Our Mission",
+    missionDesc: "To delight every guest with an exceptional dining experience, blending authentic flavors, warm hospitality, and a passion for culinary excellence. We strive to create a welcoming space where families and friends can celebrate life’s moments over delicious food.",
+    achievementsTitle: "Achievements Timeline",
+    achievementsDesc: "Over the years, our journey has been marked by numerous awards and milestones that celebrate our commitment to excellence and innovation in the culinary world.",
+    achievementsList: [
+      { year: "1990", desc: "Best New Restaurant Award" },
+      { year: "2005", desc: "Culinary Excellence Recognition" },
+      { year: "2015", desc: "Community Choice Award" },
+      { year: "2022", desc: "Sustainability & Innovation Honor" },
+    ],
+    visionTitle: "Our Vision",
+    visionDesc: "To be the region’s most loved restaurant, known for innovation, sustainability, and a commitment to community. We envision a future where every meal is a celebration and every guest leaves with a smile.",
+    corePrinciples: "Core Principles",
+    principle1: "Hygiene & Safety",
+    principle1Desc: "We maintain the highest standards of cleanliness and food safety, ensuring every meal is prepared in a safe and healthy environment.",
+    principle2: "Sustainability",
+    principle2Desc: "We are committed to sustainable practices, from sourcing local ingredients to minimizing waste and supporting eco-friendly initiatives.",
+    principle3: "Integrity & Respect",
+    principle3Desc: "We treat our guests, staff, and partners with honesty and respect, fostering a welcoming and inclusive community for all.",
+    ctaTitle: "Reserve Your Table or Order Online!",
+    ctaDesc: "Experience gourmet dining, chef’s specials, and unforgettable evenings at Foodify. Book your table for a special night or order your favorite dishes for home delivery. We’re here to delight your taste buds—every day!",
+    reserveBtn: "Reserve a Table",
+    orderBtn: "Order Online",
+  },
+  Arabic: {
+    about: "من نحن",
+    hero: "نصنع ذكريات الطهي، طبقًا تلو الآخر",
+    missionTitle: "مهمتنا",
+    missionDesc: "إسعاد كل ضيف بتجربة طعام استثنائية، تجمع بين النكهات الأصيلة، والضيافة الدافئة، والشغف بالتميز في الطهي. نسعى لخلق مساحة ترحيبية حيث يمكن للعائلات والأصدقاء الاحتفال بلحظات الحياة على مائدة لذيذة.",
+    achievementsTitle: "جدول الإنجازات",
+    achievementsDesc: "على مر السنين، تميزت رحلتنا بالعديد من الجوائز والإنجازات التي تحتفي بالتزامنا بالتميز والابتكار في عالم الطهي.",
+    achievementsList: [
+      { year: "1990", desc: "جائزة أفضل مطعم جديد" },
+      { year: "2005", desc: "التميز في الطهي" },
+      { year: "2015", desc: "جائزة اختيار المجتمع" },
+      { year: "2022", desc: "شرف الاستدامة والابتكار" },
+    ],
+    visionTitle: "رؤيتنا",
+    visionDesc: "أن نكون المطعم الأكثر حبًا في المنطقة، معروفين بالابتكار والاستدامة والالتزام بالمجتمع. نتصور مستقبلاً يكون فيه كل وجبة احتفالًا ويغادر فيه كل ضيف مبتسمًا.",
+    corePrinciples: "المبادئ الأساسية",
+    principle1: "النظافة والسلامة",
+    principle1Desc: "نحافظ على أعلى معايير النظافة وسلامة الغذاء، لضمان إعداد كل وجبة في بيئة آمنة وصحية.",
+    principle2: "الاستدامة",
+    principle2Desc: "نلتزم بالممارسات المستدامة، من شراء المكونات المحلية إلى تقليل النفايات ودعم المبادرات الصديقة للبيئة.",
+    principle3: "النزاهة والاحترام",
+    principle3Desc: "نتعامل مع ضيوفنا وموظفينا وشركائنا بأمانة واحترام، ونبني مجتمعًا مرحبًا وشاملًا للجميع.",
+    ctaTitle: "احجز طاولتك أو اطلب عبر الإنترنت!",
+    ctaDesc: "اختبر الطعام الفاخر، أطباق الشيف الخاصة، والأمسيات التي لا تُنسى في فوديفاي. احجز طاولتك لليلة مميزة أو اطلب أطباقك المفضلة للتوصيل. نحن هنا لإسعاد ذوقك—كل يوم!",
+    reserveBtn: "احجز طاولة",
+    orderBtn: "اطلب عبر الإنترنت",
+  },
+  Hebrew: {
+    about: "עלינו",
+    hero: "יוצרים זיכרונות קולינריים, צלחת אחר צלחת",
+    missionTitle: "המשימה שלנו",
+    missionDesc: "לשמח כל אורח בחוויית אוכל יוצאת דופן, המשלבת טעמים אותנטיים, אירוח חם ותשוקה למצוינות קולינרית. אנו שואפים ליצור מקום מזמין בו משפחות וחברים יכולים לחגוג את רגעי החיים על אוכל טעים.",
+    achievementsTitle: "ציר הזמן של ההישגים",
+    achievementsDesc: "לאורך השנים, המסע שלנו התאפיין בפרסים רבים ואבני דרך החוגגים את המחויבות שלנו למצוינות וחדשנות בעולם הקולינריה.",
+    achievementsList: [
+      { year: "1990", desc: "פרס המסעדה החדשה הטובה ביותר" },
+      { year: "2005", desc: "הוקרה למצוינות קולינרית" },
+      { year: "2015", desc: "פרס בחירת הקהילה" },
+      { year: "2022", desc: "אות קיימות וחדשנות" },
+    ],
+    visionTitle: "החזון שלנו",
+    visionDesc: "להיות המסעדה האהובה ביותר באזור, ידועה בחדשנות, קיימות ומחויבות לקהילה. אנו רואים עתיד בו כל ארוחה היא חגיגה וכל אורח יוצא עם חיוך.",
+    corePrinciples: "עקרונות יסוד",
+    principle1: "היגיינה ובטיחות",
+    principle1Desc: "אנו שומרים על הסטנדרטים הגבוהים ביותר של ניקיון ובטיחות מזון, ומבטיחים שכל ארוחה מוכנה בסביבה בטוחה ובריאה.",
+    principle2: "קיימות",
+    principle2Desc: "אנו מחויבים לפרקטיקות ברות קיימא, מרכישת מרכיבים מקומיים ועד למזעור פסולת ותמיכה ביוזמות ידידותיות לסביבה.",
+    principle3: "יושרה וכבוד",
+    principle3Desc: "אנו מתייחסים לאורחים, לצוות ולשותפים שלנו ביושרה ובכבוד, ומטפחים קהילה מזמינה ומכילה לכולם.",
+    ctaTitle: "הזמן שולחן או הזמן אונליין!",
+    ctaDesc: "חווית אוכל גורמה, מנות שף וערבים בלתי נשכחים בפודיפיי. הזמינו שולחן לערב מיוחד או הזמינו את המנות האהובות עליכם למשלוח. אנחנו כאן כדי לפנק אתכם—כל יום!",
+    reserveBtn: "הזמן שולחן",
+    orderBtn: "הזמן אונליין",
+  },
+};
+
 export default function AboutUs() {
+  const [language, setLanguage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('selectedLanguage') || 'English';
+    }
+    return 'English';
+  });
+
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setLanguage(localStorage.getItem('selectedLanguage') || 'English');
+    };
+    window.addEventListener('language-changed', handleLanguageChange);
+    window.addEventListener('storage', handleLanguageChange);
+    return () => {
+      window.removeEventListener('language-changed', handleLanguageChange);
+      window.removeEventListener('storage', handleLanguageChange);
+    };
+  }, []);
+
+  const t = translations[language] || translations.English;
+  const isRTL = language === 'Arabic' || language === 'Hebrew';
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen" dir={isRTL ? 'rtl' : 'ltr'}>
       
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
@@ -21,8 +127,8 @@ export default function AboutUs() {
         />
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
-          <h1 className="text-6xl font-serif font-bold text-white text-center mb-4 drop-shadow-lg">About Us</h1>
-          <span className="text-xl md:text-2xl text-white/90 text-center mb-8 max-w-2xl drop-shadow">Crafting Culinary Memories, One Plate at a Time</span>
+          <h1 className="text-6xl font-serif font-bold text-white text-center mb-4 drop-shadow-lg">{t.about}</h1>
+          <span className="text-xl md:text-2xl text-white/90 text-center mb-8 max-w-2xl drop-shadow">{t.hero}</span>
         </div>
       </section>
       {/* Our Mission Section */}
@@ -45,13 +151,10 @@ export default function AboutUs() {
     {/* Right: Content */}
     <div className="grid gap-4 content-center">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-serif">
-        Our Mission
+        {t.missionTitle}
       </h2>
       <p className="text-lg text-gray-700 max-w-lg">
-        To delight every guest with an exceptional dining experience,
-        blending authentic flavors, warm hospitality, and a passion for
-        culinary excellence. We strive to create a welcoming space where
-        families and friends can celebrate life’s moments over delicious food.
+        {t.missionDesc}
       </p>
     </div>
   </div>
@@ -73,18 +176,15 @@ export default function AboutUs() {
     {/* Right: Content */}
     <div className="grid gap-4 content-center">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-serif">
-        Achievements Timeline
+        {t.achievementsTitle}
       </h2>
       <p className="text-lg text-gray-700 max-w-lg">
-        Over the years, our journey has been marked by numerous awards and
-        milestones that celebrate our commitment to excellence and innovation
-        in the culinary world.
+        {t.achievementsDesc}
       </p>
       <ul className="space-y-2 text-gray-700 list-disc pl-5">
-        <li><span className="font-semibold">1990:</span> Best New Restaurant Award</li>
-        <li><span className="font-semibold">2005:</span> Culinary Excellence Recognition</li>
-        <li><span className="font-semibold">2015:</span> Community Choice Award</li>
-        <li><span className="font-semibold">2022:</span> Sustainability & Innovation Honor</li>
+        {t.achievementsList.map((item, i) => (
+          <li key={i}><span className="font-semibold">{item.year}:</span> {item.desc}</li>
+        ))}
       </ul>
     </div>
   </div>
@@ -97,12 +197,10 @@ export default function AboutUs() {
     {/* Left: Content */}
     <div className="grid gap-4 content-center order-2 md:order-1">
       <h2 className="text-3xl md:text-4xl font-bold text-black font-serif">
-        Our Vision
+        {t.visionTitle}
       </h2>
       <p className="text-lg text-black max-w-lg">
-        To be the region’s most loved restaurant, known for innovation,
-        sustainability, and a commitment to community. We envision a future
-        where every meal is a celebration and every guest leaves with a smile.
+        {t.visionDesc}
       </p>
     </div>
 
@@ -125,22 +223,22 @@ export default function AboutUs() {
       {/* Core Principles Section */}
       <section className="w-full bg-white py-20 px-4 md:px-0 flex flex-col items-center justify-center">
         <div className="max-w-6xl w-full mx-auto flex flex-col items-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif text-center">Core Principles</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif text-center">{t.corePrinciples}</h2>
           <div className="grid  md:grid-cols-3 gap-10 w-full">
             {/* Principle 1 */}
             <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold mb-2 text-red-600">Hygiene & Safety</h3>
-              <p className="text-gray-700 text-center">We maintain the highest standards of cleanliness and food safety, ensuring every meal is prepared in a safe and healthy environment.</p>
+              <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle1}</h3>
+              <p className="text-gray-700 text-center">{t.principle1Desc}</p>
             </div>
             {/* Principle 2 */}
             <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold mb-2 text-red-600">Sustainability</h3>
-              <p className="text-gray-700 text-center">We are committed to sustainable practices, from sourcing local ingredients to minimizing waste and supporting eco-friendly initiatives.</p>
+              <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle2}</h3>
+              <p className="text-gray-700 text-center">{t.principle2Desc}</p>
             </div>
             {/* Principle 3 */}
             <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-semibold mb-2 text-red-600">Integrity & Respect</h3>
-              <p className="text-gray-700 text-center">We treat our guests, staff, and partners with honesty and respect, fostering a welcoming and inclusive community for all.</p>
+              <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle3}</h3>
+              <p className="text-gray-700 text-center">{t.principle3Desc}</p>
             </div>
           </div>
         </div>
@@ -148,11 +246,11 @@ export default function AboutUs() {
       {/* CTA Section */}
       <section className="w-full bg-red-50 py-16 px-4 md:px-0 flex flex-col items-center justify-center">
         <div className="max-w-3xl w-full mx-auto flex flex-col items-center justify-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-red-600">Reserve Your Table or Order Online!</h2>
-          <p className="text-lg text-center text-gray-700 mb-8">Experience gourmet dining, chef’s specials, and unforgettable evenings at Foodify. Book your table for a special night or order your favorite dishes for home delivery. We’re here to delight your taste buds—every day!</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-red-600">{t.ctaTitle}</h2>
+          <p className="text-lg text-center text-gray-700 mb-8">{t.ctaDesc}</p>
           <div className="flex flex-row sm:flex-row gap-4">
-            <a href="#reserve" className="px-10 py-4 rounded-full text-white font-semibold text-lg shadow-lg transition bg-red-600 hover:bg-red-700">Reserve a Table</a>
-            <a href="#order" className="px-10 py-4 rounded-full text-red-600 font-semibold text-lg shadow-lg transition bg-white hover:bg-red-100 border border-red-600">Order Online</a>
+            <a href="#reserve" className="px-10 py-4 rounded-full text-white font-semibold text-lg shadow-lg transition bg-red-600 hover:bg-red-700">{t.reserveBtn}</a>
+            <a href="#order" className="px-10 py-4 rounded-full text-red-600 font-semibold text-lg shadow-lg transition bg-white hover:bg-red-100 border border-red-600">{t.orderBtn}</a>
           </div>
         </div>
       </section>
