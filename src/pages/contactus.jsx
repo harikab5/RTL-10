@@ -1,3 +1,10 @@
+import React, { useState } from "react";
+import contactVideo from "../assets/contact.mp4";
+import contact1 from "../assets/contact1.jpg";
+import contact2 from "../assets/contact2.jpg";
+import contact3 from "../assets/contact3.webp";
+import faqImage from "../assets/faq.jpg";
+
 // Translation object for Contact page
 const translations = {
   en: {
@@ -109,15 +116,32 @@ const translations = {
     ],
   },
 };
+
+
+
+export default function ContactHero() {
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [openIndex, setOpenIndex] = useState(null);
+
   // Language state synced with Header (live update)
   const [language, setLanguage] = React.useState('en');
+  // Map UI language names to codes
+  const langMap = {
+    English: 'en',
+    Arabic: 'ar',
+    Hebrew: 'he',
+    en: 'en',
+    ar: 'ar',
+    he: 'he',
+  };
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedLang = localStorage.getItem('language') || 'en';
-      setLanguage(storedLang);
+      const storedSelectedLang = localStorage.getItem('selectedLanguage') || 'English';
+      setLanguage(langMap[storedSelectedLang] || 'en');
       const handleLangChange = () => {
-        const newLang = localStorage.getItem('language') || 'en';
-        setLanguage(newLang);
+        const newSelectedLang = localStorage.getItem('selectedLanguage') || 'English';
+        setLanguage(langMap[newSelectedLang] || 'en');
       };
       window.addEventListener('language-changed', handleLangChange);
       window.addEventListener('storage', handleLangChange);
@@ -130,63 +154,8 @@ const translations = {
 
   // Set RTL/LTR direction
   const dir = language === 'ar' || language === 'he' ? 'rtl' : 'ltr';
-import React, { useState } from "react";
-import contactVideo from "../assets/contact.mp4"; 
-import contact1 from "../assets/contact1.jpg";
-import contact2 from "../assets/contact2.jpg";
-import contact3 from "../assets/contact3.webp";
-import faqImage from "../assets/faq.jpg";
-const faqs = [
-  {
-    question: "How do I place an order online?",
-    answer: "You can easily order through our website or mobile app by browsing the menu, selecting your dishes, and checking out securely.",
-  },
-  {
-    question: "Do you offer home delivery?",
-    answer: "Yes, we provide fast and reliable home delivery to your doorstep within our service area.",
-  },
-  {
-    question: "Can I customize my order?",
-    answer: "Absolutely! You can add special instructions, choose spice levels, and request add-ons while placing your order.",
-  },
-  {
-    question: "What areas do you deliver to?",
-    answer: "We currently deliver across major parts of the city. You can check delivery availability by entering your location at checkout.",
-  },
-  {
-    question: "Do you offer special deals or discounts?",
-    answer: "Yes, we regularly run promotions, combo offers, and discounts. Keep an eye on our website or app for the latest deals.",
-  },
-];
-
-
-
-
-const cards = [
-  {
-    img: contact1,
-    title: "Visit Us",
-    text: "123 Business Street, Suite 100, YourCity",
-  },
-  {
-    img: contact2,
-    title: "Email Us",
-    text: "stackly.com",
-  },
-  {
-    img: contact3,
-    title: "Customer Care",
-    text: "+1 (800) 123-4567",
-  },
-];
-
-export default function ContactHero() {
-  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
-    console.log('Toggling FAQ index:', index, 'Current openIndex:', openIndex);
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -210,7 +179,7 @@ export default function ContactHero() {
   }, []);
 
   return (
-  <div className={theme === 'dark' ? 'min-h-screen text-white' : 'min-h-screen  text-black'} dir={dir}>
+    <div className={theme === 'dark' ? 'min-h-screen text-white' : 'min-h-screen  text-black'} dir={dir}>
       {/* Hero Section */}
       <section className={`relative h-screen flex items-center justify-center ${theme === 'dark' ? '' : ''}`}> 
         {/* Background video */}
@@ -246,21 +215,24 @@ export default function ContactHero() {
         </h2>
         {/* Cards Grid */}
         <div className="grid gap-10 md:grid-cols-3">
-          {translations[language].cards.map((card, index) => (
-            <div
-              key={index}
-              className={`${theme === 'dark' ? 'bg-[#181818] text-white' : 'bg-white text-black'} rounded-2xl shadow-md hover:shadow-xl transition text-center p-6`}
-              style={dir === 'rtl' ? { direction: 'rtl' } : {}}
-            >
-              <img
-                src={cards[index].img}
-                alt={card.title}
-                className="w-full h-56 object-cover rounded-xl mb-6"
-              />
-              <h3 className="text-xl font-bold mb-2" style={{ color: 'red-500' }}>{card.title}</h3>
-              <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{card.text}</p>
-            </div>
-          ))}
+          {(() => {
+            const cardImages = [contact1, contact2, contact3];
+            return translations[language].cards.map((card, index) => (
+              <div
+                key={index}
+                className={`${theme === 'dark' ? 'bg-[#181818] text-white' : 'bg-white text-black'} rounded-2xl shadow-md hover:shadow-xl transition text-center p-6`}
+                style={dir === 'rtl' ? { direction: 'rtl' } : {}}
+              >
+                <img
+                  src={cardImages[index]}
+                  alt={card.title}
+                  className="w-full h-56 object-cover rounded-xl mb-6"
+                />
+                <h3 className="text-xl font-bold mb-2" style={{ color: 'red-500' }}>{card.title}</h3>
+                <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{card.text}</p>
+              </div>
+            ));
+          })()}
         </div>
       </div>
     </section>

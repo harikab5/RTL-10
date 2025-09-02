@@ -96,25 +96,56 @@ export default function AboutUs() {
     }
     return 'English';
   });
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light';
+    }
+    return 'light';
+  });
 
   useEffect(() => {
     const handleLanguageChange = () => {
       setLanguage(localStorage.getItem('selectedLanguage') || 'English');
     };
+    const handleThemeChange = () => {
+      setTheme(localStorage.getItem('theme') || 'light');
+    };
     window.addEventListener('language-changed', handleLanguageChange);
     window.addEventListener('storage', handleLanguageChange);
+    window.addEventListener('theme-changed', handleThemeChange);
+    window.addEventListener('storage', handleThemeChange);
     return () => {
       window.removeEventListener('language-changed', handleLanguageChange);
       window.removeEventListener('storage', handleLanguageChange);
+      window.removeEventListener('theme-changed', handleThemeChange);
+      window.removeEventListener('storage', handleThemeChange);
     };
   }, []);
 
   const t = translations[language] || translations.English;
   const isRTL = language === 'Arabic' || language === 'Hebrew';
 
+  // Theme toggle handler
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+      window.dispatchEvent(new Event('theme-changed'));
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen" dir={isRTL ? 'rtl' : 'ltr'}>
-      
+    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-30 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded shadow hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+      </button>
+
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
         <video
@@ -125,136 +156,116 @@ export default function AboutUs() {
           muted
           playsInline
         />
-        <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className={`absolute inset-0 z-10 ${theme === 'dark' ? 'bg-black/70' : 'bg-black/60'}`} />
         <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
           <h1 className="text-6xl font-serif font-bold text-white text-center mb-4 drop-shadow-lg">{t.about}</h1>
           <span className="text-xl md:text-2xl text-white/90 text-center mb-8 max-w-2xl drop-shadow">{t.hero}</span>
         </div>
       </section>
+
       {/* Our Mission Section */}
-  {/* Our Mission Section */}
-{/* Our Mission Section */}
-<section className="w-full bg-red-50 py-20 px-4 md:px-0 flex flex-col items-center justify-center">
-  <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
-    
-    {/* Left: Image */}
-    <div className="w-full h-full">
-      <div className="w-full aspect-[16/10]">
-        <img
-          src={special1}
-          alt="Our Mission"
-          className="rounded-2xl shadow-lg w-full h-full object-cover"
-        />
-      </div>
-    </div>
+      <section className={`w-full py-20 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
+        <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
+          {/* Left: Image */}
+          <div className="w-full h-full">
+            <div className="w-full aspect-[16/10]">
+              <img
+                src={special1}
+                alt="Our Mission"
+                className="rounded-2xl shadow-lg w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          {/* Right: Content */}
+          <div className="grid gap-4 content-center">
+            <h2 className={`text-3xl md:text-4xl font-bold font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.missionTitle}</h2>
+            <p className={`text-lg max-w-lg ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.missionDesc}</p>
+          </div>
+        </div>
+      </section>
 
-    {/* Right: Content */}
-    <div className="grid gap-4 content-center">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-serif">
-        {t.missionTitle}
-      </h2>
-      <p className="text-lg text-gray-700 max-w-lg">
-        {t.missionDesc}
-      </p>
-    </div>
-  </div>
-</section>
-<section className="w-full bg-white py-20 px-4 md:px-0 flex flex-col items-center justify-center">
-  <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
-    
-    {/* Left: Image */}
-    <div className="w-full h-full order-1 md:order-2">
-      <div className="w-full aspect-[16/10]">
-        <img
-          src={awards}
-          alt="Achievements Timeline"
-          className="rounded-2xl shadow-lg w-full h-full object-cover"
-        />
-      </div>
-    </div>
+      {/* Achievements Timeline Section */}
+      <section className={`w-full py-20 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
+        <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
+          {/* Left: Image */}
+          <div className="w-full h-full order-1 md:order-2">
+            <div className="w-full aspect-[16/10]">
+              <img
+                src={awards}
+                alt="Achievements Timeline"
+                className="rounded-2xl shadow-lg w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          {/* Right: Content */}
+          <div className="grid gap-4 content-center">
+            <h2 className={`text-3xl md:text-4xl font-bold font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.achievementsTitle}</h2>
+            <p className={`text-lg max-w-lg ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.achievementsDesc}</p>
+            <ul className={`space-y-2 list-disc pl-5 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
+              {t.achievementsList.map((item, i) => (
+                <li key={i}><span className="font-semibold">{item.year}:</span> {item.desc}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
 
-    {/* Right: Content */}
-    <div className="grid gap-4 content-center">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-serif">
-        {t.achievementsTitle}
-      </h2>
-      <p className="text-lg text-gray-700 max-w-lg">
-        {t.achievementsDesc}
-      </p>
-      <ul className="space-y-2 text-gray-700 list-disc pl-5">
-        {t.achievementsList.map((item, i) => (
-          <li key={i}><span className="font-semibold">{item.year}:</span> {item.desc}</li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</section>
-
-{/* Our Vision Section */}
-<section className="w-full bg-red-50 py-20 px-4 md:px-0 flex flex-col items-center justify-center">
-  <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
-    
-    {/* Left: Content */}
-    <div className="grid gap-4 content-center order-2 md:order-1">
-      <h2 className="text-3xl md:text-4xl font-bold text-black font-serif">
-        {t.visionTitle}
-      </h2>
-      <p className="text-lg text-black max-w-lg">
-        {t.visionDesc}
-      </p>
-    </div>
-
-    {/* Right: Image */}
-    <div className="w-full h-full order-1 md:order-2">
-      <div className="w-full aspect-[16/10]">
-        <img
-          src={special2}
-          alt="Our Vision"
-          className="rounded-2xl shadow-lg w-full h-full object-cover"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-{/* Achievements Timeline Section */}
-
+      {/* Our Vision Section */}
+      <section className={`w-full py-20 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
+        <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
+          {/* Left: Content */}
+          <div className="grid gap-4 content-center order-2 md:order-1">
+            <h2 className={`text-3xl md:text-4xl font-bold font-serif ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{t.visionTitle}</h2>
+            <p className={`text-lg max-w-lg ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{t.visionDesc}</p>
+          </div>
+          {/* Right: Image */}
+          <div className="w-full h-full order-1 md:order-2">
+            <div className="w-full aspect-[16/10]">
+              <img
+                src={special2}
+                alt="Our Vision"
+                className="rounded-2xl shadow-lg w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Core Principles Section */}
-      <section className="w-full bg-white py-20 px-4 md:px-0 flex flex-col items-center justify-center">
+      <section className={`w-full py-20 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
         <div className="max-w-6xl w-full mx-auto flex flex-col items-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif text-center">{t.corePrinciples}</h2>
+          <h2 className={`text-3xl md:text-4xl font-bold mb-8 font-serif text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.corePrinciples}</h2>
           <div className="grid  md:grid-cols-3 gap-10 w-full">
             {/* Principle 1 */}
-            <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
+            <div className={`flex flex-col items-center rounded-2xl shadow-lg p-8 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
               <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle1}</h3>
-              <p className="text-gray-700 text-center">{t.principle1Desc}</p>
+              <p className={`text-center ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.principle1Desc}</p>
             </div>
             {/* Principle 2 */}
-            <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
+            <div className={`flex flex-col items-center rounded-2xl shadow-lg p-8 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
               <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle2}</h3>
-              <p className="text-gray-700 text-center">{t.principle2Desc}</p>
+              <p className={`text-center ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.principle2Desc}</p>
             </div>
             {/* Principle 3 */}
-            <div className="flex flex-col items-center bg-red-50 rounded-2xl shadow-lg p-8">
+            <div className={`flex flex-col items-center rounded-2xl shadow-lg p-8 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
               <h3 className="text-xl font-semibold mb-2 text-red-600">{t.principle3}</h3>
-              <p className="text-gray-700 text-center">{t.principle3Desc}</p>
+              <p className={`text-center ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.principle3Desc}</p>
             </div>
           </div>
         </div>
       </section>
+
       {/* CTA Section */}
-      <section className="w-full bg-red-50 py-16 px-4 md:px-0 flex flex-col items-center justify-center">
+      <section className={`w-full py-16 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
         <div className="max-w-3xl w-full mx-auto flex flex-col items-center justify-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-red-600">{t.ctaTitle}</h2>
-          <p className="text-lg text-center text-gray-700 mb-8">{t.ctaDesc}</p>
+          <p className={`text-lg text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.ctaDesc}</p>
           <div className="flex flex-row sm:flex-row gap-4">
             <a href="#reserve" className="px-10 py-4 rounded-full text-white font-semibold text-lg shadow-lg transition bg-red-600 hover:bg-red-700">{t.reserveBtn}</a>
-            <a href="#order" className="px-10 py-4 rounded-full text-red-600 font-semibold text-lg shadow-lg transition bg-white hover:bg-red-100 border border-red-600">{t.orderBtn}</a>
+            <a href="#order" className={`px-10 py-4 rounded-full font-semibold text-lg shadow-lg transition border ${theme === 'dark' ? 'text-red-400 bg-[#181818] border-red-400 hover:bg-[#222]' : 'text-red-600 bg-white border-red-600 hover:bg-red-100'}`}>{t.orderBtn}</a>
           </div>
         </div>
       </section>
-      
     </div>
   );
 }

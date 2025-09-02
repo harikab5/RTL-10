@@ -121,27 +121,60 @@ export default function Home1() {
     }
     return 'English';
   });
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light';
+    }
+    return 'light';
+  });
 
   useEffect(() => {
     const handleLanguageChange = () => {
       setLanguage(localStorage.getItem('selectedLanguage') || 'English');
     };
+    const handleThemeChange = () => {
+      setTheme(localStorage.getItem('theme') || 'light');
+    };
     window.addEventListener('language-changed', handleLanguageChange);
     window.addEventListener('storage', handleLanguageChange);
+    window.addEventListener('theme-changed', handleThemeChange);
+    window.addEventListener('storage', handleThemeChange);
     return () => {
       window.removeEventListener('language-changed', handleLanguageChange);
       window.removeEventListener('storage', handleLanguageChange);
+      window.removeEventListener('theme-changed', handleThemeChange);
+      window.removeEventListener('storage', handleThemeChange);
     };
   }, []);
 
   const t = translations[language] || translations.English;
   const isRTL = language === 'Arabic' || language === 'Hebrew';
 
+  // Theme toggle handler
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+      window.dispatchEvent(new Event('theme-changed'));
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen" dir={isRTL ? 'rtl' : 'ltr'}>
-     
+    <div
+      className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-30 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded shadow hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+      </button>
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
+  <section className={`relative flex flex-col items-center justify-center h-screen w-full overflow-hidden ${theme === 'dark' ? 'bg-black' : ''}`}>
         {/* Background Video for Hero Only */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0 brightness-110"
@@ -152,9 +185,9 @@ export default function Home1() {
           playsInline
         />
         {/* Overlay with less opacity for more brightness */}
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold text-white text-center mb-4 drop-shadow-lg">
+  <div className={`absolute inset-0 z-10 ${theme === 'dark' ? 'bg-black/70' : 'bg-black/40'}`} />
+  <div className="relative z-20 flex flex-col items-center justify-center h-full w-full">
+          <h1 className={`text-5xl md:text-6xl font-serif font-bold text-center mb-4 drop-shadow-lg ${theme === 'dark' ? 'text-white' : 'text-white'}`}>
             {t.heroTitle.split('\n').map((line, i) => (
               <React.Fragment key={i}>
                 {line}
@@ -162,22 +195,22 @@ export default function Home1() {
               </React.Fragment>
             ))}
           </h1>
-          <p className="text-lg md:text-xl text-white/90 text-center mb-8 max-w-xl drop-shadow">
+          <p className={`text-lg md:text-xl text-center mb-8 max-w-xl drop-shadow ${theme === 'dark' ? 'text-white/90' : 'text-white/90'}`}> 
             {t.heroDesc}
           </p>
           <div className="flex gap-6">
-            <button className="relative border border-white text-white px-8 py-3 rounded-lg text-lg font-serif flex items-center group bg-transparent hover:bg-white/10 transition">
+            <button className={`relative border border-white text-white px-8 py-3 rounded-lg text-lg font-serif flex items-center group bg-transparent hover:bg-white/10 transition ${theme === 'dark' ? '' : ''}`}>
               {t.readMore}
               <span className="ml-3 w-8 h-0.5 bg-white block group-hover:bg-red-500 transition-all"></span>
             </button>
-            <button className="bg-white/90 hover:bg-white text-red-700 font-semibold px-8 py-3 rounded-lg text-lg shadow transition">
+            <button className={`font-semibold px-8 py-3 rounded-lg text-lg shadow transition ${theme === 'dark' ? 'bg-white/90 hover:bg-white text-red-700' : 'bg-white/90 hover:bg-white text-red-700'}`}> 
               {t.findMenu}
             </button>
           </div>
         </div>
       </section>
       {/* About/Feature Section */}
-      <section className="relative w-full bg-white/90 py-16 px-4 md:px-0 flex flex-col items-center justify-center z-10">
+  <section className={`relative w-full py-16 px-4 md:px-0 flex flex-col items-center justify-center z-10 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-white/90'}`}>
         <div className="max-w-6xl w-full mx-auto grid  md:grid-cols-2 gap-10 items-stretch">
           {/* Left: Video */}
           <div className="w-full flex justify-center items-center min-h-[340px] h-full">
@@ -192,9 +225,9 @@ export default function Home1() {
           </div>
           {/* Right: Content */}
           <div className="flex flex-col items-start justify-center min-h-[340px] h-full">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-serif">{t.aboutTitle}</h2>
-            <p className="text-lg text-gray-700 mb-6 max-w-lg">{t.aboutDesc}</p>
-            <ul className="mb-6 space-y-2 text-gray-700">
+            <h2 className={`text-3xl md:text-4xl font-bold mb-4 font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.aboutTitle}</h2>
+            <p className={`text-lg mb-6 max-w-lg ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>{t.aboutDesc}</p>
+            <ul className={`mb-6 space-y-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
               {t.aboutList.map((item, i) => <li key={i}>{item}</li>)}
             </ul>
             <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">{t.aboutBtn}</button>
@@ -203,58 +236,58 @@ export default function Home1() {
       </section>
 
       {/* Explore Menu Section */}
-      <section className="w-full bg-red-50 py-16 px-4 md:px-0 flex flex-col items-center justify-center">
+  <section className={`w-full py-16 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#222]' : 'bg-red-50'}`}> 
         <div className="max-w-6xl w-full mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 font-serif text-center">{t.menuTitle}</h2>
+          <h2 className={`text-3xl md:text-4xl font-bold mb-10 font-serif text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.menuTitle}</h2>
           <div className="grid  sm:grid-cols-2 md:grid-cols-4 gap-8">
             {/* Menu Card 1 */}
             <div className="flex flex-col items-center">
               <img src={menu1} alt={t.menu1} className="w-full h-80 object-cover rounded-lg shadow-lg" />
-              <span className="mt-4 text-gray-900 text-lg font-serif">{t.menu1}</span>
+              <span className={`mt-4 text-lg font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.menu1}</span>
             </div>
             {/* Menu Card 2 */}
             <div className="flex flex-col items-center">
               <img src={menu2} alt={t.menu2} className="w-full h-80 object-cover rounded-lg shadow-lg" />
-              <span className="mt-4 text-gray-900 text-lg font-serif">{t.menu2}</span>
+              <span className={`mt-4 text-lg font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.menu2}</span>
             </div>
             {/* Menu Card 3 */}
             <div className="flex flex-col items-center">
               <img src={menu3} alt={t.menu3} className="w-full h-80 object-cover rounded-lg shadow-lg" />
-              <span className="mt-4 text-gray-900 text-lg font-serif">{t.menu3}</span>
+              <span className={`mt-4 text-lg font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.menu3}</span>
             </div>
             {/* Menu Card 4 */}
             <div className="flex flex-col items-center">
               <img src={menu4} alt={t.menu4} className="w-full h-80 object-cover rounded-lg shadow-lg" />
-              <span className="mt-4 text-gray-900 text-lg font-serif">{t.menu4}</span>
+              <span className={`mt-4 text-lg font-serif ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{t.menu4}</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Why Choose Us Section (White theme, red border, black text) */}
-      <section className="w-full bg-white py-20 px-4 md:px-0 flex flex-col items-center justify-center">
+  <section className={`w-full py-20 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-white'}`}>
         <div className="max-w-6xl w-full mx-auto">
           <div className="text-center mb-2">
             <span className="text-lg text-red-600 font-serif italic tracking-wide">{t.whyChooseUs}</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-serif font-bold text-black text-center mb-12">{t.whyChooseUs}</h2>
+          <h2 className={`text-5xl md:text-6xl font-serif font-bold text-center mb-12 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{t.whyChooseUs}</h2>
           <div className="grid  md:grid-cols-3 gap-10">
             {/* Card 1 */}
-            <div className="bg-transparent border border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all">
+            <div className={`bg-transparent border border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all ${theme === 'dark' ? 'text-white' : 'text-black'}`}> 
               {/* Fries Icon SVG */}
               <svg width="64" height="64" fill="none" stroke="#dc2626" strokeWidth="2" viewBox="0 0 64 64" className="mb-6"><rect x="18" y="28" width="28" height="24" rx="4"/><path d="M22 28V18M32 28V12M42 28V20"/></svg>
               <h3 className="text-2xl font-serif font-semibold text-black mb-2">{t.why1}</h3>
               <p className="text-gray-700 text-base">{t.why1desc}</p>
             </div>
             {/* Card 2 (Highlighted) */}
-            <div className="bg-transparent border-2 border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all relative" style={{boxShadow:'0 0 0 4px #fff, 0 0 0 8px #dc2626'}}>
+            <div className={`bg-transparent border-2 border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all relative ${theme === 'dark' ? 'text-white' : 'text-black'}`} style={{boxShadow:'0 0 0 4px #fff, 0 0 0 8px #dc2626'}}>
               {/* Drink Icon SVG */}
               <svg width="64" height="64" fill="none" stroke="#dc2626" strokeWidth="2" viewBox="0 0 64 64" className="mb-6"><rect x="22" y="16" width="20" height="32" rx="6"/><path d="M32 48v6"/><circle cx="32" cy="24" r="2"/></svg>
               <h3 className="text-2xl font-serif font-semibold text-black mb-2">{t.why2}</h3>
               <p className="text-gray-700 text-base">{t.why2desc}</p>
             </div>
             {/* Card 3 */}
-            <div className="bg-transparent border border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all">
+            <div className={`bg-transparent border border-red-600 rounded-none p-10 flex flex-col items-center text-center transition-all ${theme === 'dark' ? 'text-white' : 'text-black'}`}> 
               {/* Burger Icon SVG */}
               <svg width="64" height="64" fill="none" stroke="#dc2626" strokeWidth="2" viewBox="0 0 64 64" className="mb-6"><ellipse cx="32" cy="28" rx="18" ry="8"/><rect x="14" y="28" width="36" height="10" rx="5"/><rect x="18" y="38" width="28" height="8" rx="4"/></svg>
               <h3 className="text-2xl font-serif font-semibold text-black mb-2">{t.why3}</h3>
@@ -264,10 +297,10 @@ export default function Home1() {
         </div>
       </section>
       {/* What Our Clients Say Section (Three circular cards, one image each) */}
-      <section className="relative w-full flex flex-row items-center justify-center py-20 bg-transparent overflow-hidden">
+  <section className={`relative w-full flex flex-row items-center justify-center py-20 overflow-hidden ${theme === 'dark' ? 'bg-[#222]' : 'bg-transparent'}`}> 
         {/* Background food image (use menu1 as a placeholder) */}
         <img src={menu1} alt="food background" className="absolute inset-0 w-full h-full object-cover opacity-60 blur-sm z-0" />
-        <div className="relative z-10 flex flex-col items-center justify-center w-full">
+  <div className="relative z-10 flex flex-col items-center justify-center w-full">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-red-600 mb-12 text-center drop-shadow">{t.clientsSay}</h2>
           <div className="flex  md:flex-row justify-center items-center w-full gap-8">
             {/* Card 1 */}
@@ -316,10 +349,10 @@ export default function Home1() {
         </div>
       </section>
       {/* CTAs Section (Styled like attachment) */}
-      <section className="w-full bg-white py-16 px-4 md:px-0 flex flex-col items-center justify-center">
+  <section className={`w-full py-16 px-4 md:px-0 flex flex-col items-center justify-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-white'}`}>
         <div className="max-w-3xl w-full mx-auto flex flex-col items-center justify-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4" style={{color: 'red'}}>{t.readyGrow}</h2>
-          <p className="text-lg text-center text-gray-700 mb-8">{t.readyDesc}</p>
+          <p className={`text-lg text-center mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>{t.readyDesc}</p>
           <a href="#get-started" className="mt-2 px-10 py-4 rounded-full text-white font-semibold text-lg shadow-lg transition bg-red-500" style={{boxShadow:'0 4px 24px 0 rgba(139,92,246,0.15)'}}>{t.getStarted}</a>
         </div>
       </section>

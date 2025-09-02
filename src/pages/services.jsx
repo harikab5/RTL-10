@@ -199,24 +199,56 @@ const ServicesPage = () => {
     }
     return 'English';
   });
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light';
+    }
+    return 'light';
+  });
 
   useEffect(() => {
     const handleLanguageChange = () => {
       setLanguage(localStorage.getItem('selectedLanguage') || 'English');
     };
+    const handleThemeChange = () => {
+      setTheme(localStorage.getItem('theme') || 'light');
+    };
     window.addEventListener('language-changed', handleLanguageChange);
     window.addEventListener('storage', handleLanguageChange);
+    window.addEventListener('theme-changed', handleThemeChange);
+    window.addEventListener('storage', handleThemeChange);
     return () => {
       window.removeEventListener('language-changed', handleLanguageChange);
       window.removeEventListener('storage', handleLanguageChange);
+      window.removeEventListener('theme-changed', handleThemeChange);
+      window.removeEventListener('storage', handleThemeChange);
     };
   }, []);
 
   const t = translations[language] || translations.English;
   const isRTL = language === 'Arabic' || language === 'Hebrew';
 
+  // Theme toggle handler
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+      window.dispatchEvent(new Event('theme-changed'));
+    }
+  };
+
   return (
-    <div className="w-full" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={`w-full min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-30 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded shadow hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+        aria-label="Toggle theme"
+      >
+        {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+      </button>
+
       {/* Hero Section */}
       <section className="relative w-full h-screen overflow-hidden">
         <video
@@ -229,7 +261,7 @@ const ServicesPage = () => {
           <source src={servicehero} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/70' : 'bg-black bg-opacity-50'}`}></div>
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">{t.heroTitle}</h1>
           <p className="text-lg md:text-xl max-w-2xl">{t.heroDesc}</p>
@@ -237,7 +269,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Services Section */}
-      <section className="max-w-6xl mx-auto py-16 px-4 space-y-16">
+      <section className={`max-w-6xl mx-auto py-16 px-4 space-y-16 ${theme === 'dark' ? 'bg-[#181818]' : ''}`}>
         {t.services.map((service, index) => (
           <div key={index} className="grid md:grid-cols-2 gap-10 items-center">
             {/* Image */}
@@ -253,9 +285,7 @@ const ServicesPage = () => {
               <h3 className="text-2xl font-bold text-red-600 mb-4">
                 {service.title}
               </h3>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                {service.desc}
-              </p>
+              <p className={`text-lg leading-relaxed ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{service.desc}</p>
               <Link
                 to={servicePaths[index]}
                 className="inline-block mt-4 px-5 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition"
@@ -266,75 +296,68 @@ const ServicesPage = () => {
           </div>
         ))}
       </section>
-<ImpactSection />
+  <ImpactSection theme={theme} />
 
-
-
-
-<section className="max-w-6xl mx-auto py-16 px-4">
-  <div className="grid md:grid-cols-2 gap-10 items-center">
-    {/* Left: Image */}
-    <div>
-      <img
-        src={dealsImg}
-        alt="Ongoing Deals"
-        className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-      />
-    </div>
-
-    {/* Right: Content */}
-    <div>
-      <h2 className="text-3xl font-bold text-red-600 mb-4">{t.ongoingDeals}</h2>
-      <ul className="list-disc list-inside text-lg text-gray-700 space-y-3">
-        {t.deals.map((deal, i) => <li key={i}>{deal}</li>)}
-      </ul>
-    </div>
-  </div>
-</section>
-
-
- <section className="max-w-full bg-red-50 mx-auto py-16 px-4 grid md:grid-cols-2 gap-12 items-center">
-      {/* Left Info */}
-      <div>
-  <h2 className="text-3xl font-bold text-red-600 mb-4">{t.exploreCategories}</h2>
-  <p className="text-lg text-gray-700 mb-4 leading-relaxed">{t.exploreDesc1}</p>
-  <p className="text-lg text-gray-700 mb-4 leading-relaxed">{t.exploreDesc2}</p>
-        
-      </div>
-
-      {/* Right Cards */}
-      <div className="grid grid-cols-2 gap-6">
-        {t.categories.map((cat, index) => (
-          <div
-            key={index}
-            className="bg-white border border-gray-200 shadow-md rounded-xl p-6 text-center"
-          >
-            <h3 className="text-lg font-semibold text-red-500 mb-2">
-              {cat.title}
-            </h3>
-            <p className="text-sm text-gray-600">{cat.desc}</p>
+      {/* Ongoing Deals Section */}
+      <section className={`max-w-6xl mx-auto py-16 px-4 ${theme === 'dark' ? 'bg-black' : ''}`}>
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          {/* Left: Image */}
+          <div>
+            <img
+              src={dealsImg}
+              alt="Ongoing Deals"
+              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
+            />
           </div>
-        ))}
-      </div>
-    </section>
-{      /* Contact Section */}
-      <section className="bg-white py-16 px-4">
+          {/* Right: Content */}
+          <div>
+            <h2 className="text-3xl font-bold text-red-600 mb-4">{t.ongoingDeals}</h2>
+            <ul className={`list-disc list-inside text-lg space-y-3 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
+              {t.deals.map((deal, i) => <li key={i}>{deal}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Categories Section */}
+      <section className={`max-w-full mx-auto py-16 px-4 grid md:grid-cols-2 gap-12 items-center ${theme === 'dark' ? 'bg-[#181818]' : 'bg-red-50'}`}>
+        {/* Left Info */}
+        <div>
+          <h2 className="text-3xl font-bold text-red-600 mb-4">{t.exploreCategories}</h2>
+          <p className={`text-lg mb-4 leading-relaxed ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.exploreDesc1}</p>
+          <p className={`text-lg mb-4 leading-relaxed ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.exploreDesc2}</p>
+        </div>
+        {/* Right Cards */}
+        <div className="grid grid-cols-2 gap-6">
+          {t.categories.map((cat, index) => (
+            <div
+              key={index}
+              className={`border shadow-md rounded-xl p-6 text-center ${theme === 'dark' ? 'bg-black border-gray-700' : 'bg-white border-gray-200'}`}
+            >
+              <h3 className="text-lg font-semibold text-red-500 mb-2">
+                {cat.title}
+              </h3>
+              <p className={`text-sm ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`}>{cat.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className={`py-16 px-4 ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
         <div className="max-w-6xl mx-auto text-center">
-         <h2 className="text-3xl font-bold text-red-600 mb-4">{t.contactTitle}</h2>
-         <p className="text-lg text-gray-700 mb-6">{t.contactDesc}</p>
+          <h2 className="text-3xl font-bold text-red-600 mb-4">{t.contactTitle}</h2>
+          <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{t.contactDesc}</p>
           <Link
             to="/contactus"
             className="inline-block px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition"
           >
             {t.letsDive}
-          </Link>    
-        </div>              
+          </Link>
+        </div>
       </section>
-
-
-
     </div>
   );
-};
+}
 
 export default ServicesPage;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Animated Counter component
-const Counter = ({ label, value }) => {
+const Counter = ({ label, value, theme }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -21,8 +21,8 @@ const Counter = ({ label, value }) => {
 
   return (
     <div className="text-center">
-      <h3 className="text-4xl font-bold text-black mb-2">{count}+</h3>
-      <p className="text-black">{label}</p>
+      <h3 className={`text-4xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{count}+</h3>
+      <p className={theme === 'dark' ? 'text-white' : 'text-black'}>{label}</p>
     </div>
   );
 };
@@ -58,7 +58,8 @@ const translations = {
   },
 };
 
-const ImpactSection = () => {
+
+const ImpactSection = ({ theme }) => {
   const [language, setLanguage] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('selectedLanguage') || 'English';
@@ -82,13 +83,13 @@ const ImpactSection = () => {
   const isRTL = language === 'Arabic' || language === 'Hebrew';
 
   return (
-    <section className="max-w-full bg-red-50 mx-auto py-16 px-4" dir={isRTL ? 'rtl' : 'ltr'}>
-      <h2 className="text-3xl font-bold text-black mb-12 text-center">
+    <section className={`max-w-full mx-auto py-16 px-4 ${theme === 'dark' ? 'bg-black' : 'bg-red-50'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      <h2 className={`text-3xl font-bold mb-12 text-center ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
         {t.impact}
       </h2>
       <div className="grid  md:grid-cols-4 gap-10">
         {t.stats.map((stat, index) => (
-          <Counter key={index} label={stat.label} value={stat.value} />
+          <Counter key={index} label={stat.label} value={stat.value} theme={theme} />
         ))}
       </div>
     </section>

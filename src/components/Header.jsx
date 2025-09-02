@@ -2,6 +2,88 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
+// Translation object for all header text
+const translations = {
+  en: {
+    home: 'Home',
+    home1: 'Home 1',
+    home2: 'Home 2',
+    about: 'About Us',
+    services: 'Services',
+    allServices: 'All Services',
+    foodDelivery: 'Food Delivery',
+    catering: 'Catering Services',
+    dineIn: 'Dine-In Experience',
+    partyOrders: 'Party Orders & Bulk Meals',
+    subscription: 'Subscription Meals',
+    takeaway: 'Takeaway / Pickup',
+    blog: 'Blog',
+    contact: 'Contact Us',
+    backToAdmin: 'Back to Admin Dashboard',
+    userDashboard: 'User Dashboard',
+    logout: 'Logout',
+    orderNow: 'Order Now',
+    privacy: 'Privacy Policy',
+    terms: 'Terms & Conditions',
+    disclaimer: 'Disclaimer',
+  },
+  ar: {
+    home: 'الرئيسية',
+    home1: 'الرئيسية 1',
+    home2: 'الرئيسية 2',
+    about: 'معلومات عنا',
+    services: 'الخدمات',
+    allServices: 'كل الخدمات',
+    foodDelivery: 'توصيل الطعام',
+    catering: 'خدمات التموين',
+    dineIn: 'تجربة تناول الطعام',
+    partyOrders: 'طلبات الحفلات والوجبات بالجملة',
+    subscription: 'وجبات الاشتراك',
+    takeaway: 'استلام / وجبات جاهزة',
+    blog: 'المدونة',
+    contact: 'اتصل بنا',
+    backToAdmin: 'العودة إلى لوحة الإدارة',
+    userDashboard: 'لوحة المستخدم',
+    logout: 'تسجيل الخروج',
+    orderNow: 'اطلب الآن',
+    privacy: 'سياسة الخصوصية',
+    terms: 'الشروط والأحكام',
+    disclaimer: 'إخلاء المسؤولية',
+  },
+  he: {
+    home: 'דף הבית',
+    home1: 'דף הבית 1',
+    home2: 'דף הבית 2',
+    about: 'עלינו',
+    services: 'שירותים',
+    allServices: 'כל השירותים',
+    foodDelivery: 'משלוח אוכל',
+    catering: 'שירותי קייטרינג',
+    dineIn: 'חווית אוכל במקום',
+    partyOrders: 'הזמנות למסיבות וארוחות בכמויות',
+    subscription: 'ארוחות במנוי',
+    takeaway: 'איסוף / טייק אווי',
+    blog: 'בלוג',
+    contact: 'צור קשר',
+    backToAdmin: 'חזרה ללוח מנהל',
+    userDashboard: 'לוח משתמש',
+    logout: 'התנתק',
+    orderNow: 'הזמן עכשיו',
+    privacy: 'מדיניות פרטיות',
+    terms: 'תנאים והגבלות',
+    disclaimer: 'כתב ויתור',
+  },
+};
+
+const langMap = {
+  English: 'en',
+  Arabic: 'ar',
+  Hebrew: 'he',
+  en: 'en',
+  ar: 'ar',
+  he: 'he',
+};
+
 const Header = () => {
   const navigate = useNavigate();
   const [isAvatarDropdownOpen, setIsAvatarDropdownOpen] = useState(false);
@@ -20,11 +102,13 @@ const Header = () => {
     }
     return 'English';
   });
+  const [language, setLanguage] = useState(langMap[selectedLanguage] || 'en');
   // Ensure theme is set only after mount (SSR-safe)
   // Language change handler (stub, you can add i18n logic here)
   const handleLanguageChange = (lang) => {
     setSelectedLanguage(lang);
     setIsLanguageDropdownOpen(false);
+    setLanguage(langMap[lang] || 'en');
     if (typeof window !== 'undefined') {
       localStorage.setItem('selectedLanguage', lang);
       window.dispatchEvent(new Event('language-changed'));
@@ -36,6 +120,7 @@ const Header = () => {
       const handleLanguageChangeEvent = () => {
         const newLang = localStorage.getItem('selectedLanguage') || 'English';
         setSelectedLanguage(newLang);
+        setLanguage(langMap[newLang] || 'en');
       };
       window.addEventListener('language-changed', handleLanguageChangeEvent);
       window.addEventListener('storage', handleLanguageChangeEvent);
@@ -94,8 +179,12 @@ const Header = () => {
     setIsServicesDropdownOpen(!isServicesDropdownOpen);
   };
 
+  // Set RTL/LTR direction
+  const dir = language === 'ar' || language === 'he' ? 'rtl' : 'ltr';
+
   return (
     <header
+      dir={dir}
       className={`fixed top-0 left-0 right-0 z-50 w-full !fixed !top-0 !left-0 !right-0 !z-50 transition-colors duration-300
         ${theme === 'dark' ? 'bg-[#000] border-b border-[#141B25]' : 'bg-white border-b border-gray-200'}`}
     >
@@ -158,15 +247,15 @@ const Header = () => {
                 aria-haspopup="true"
                 aria-expanded={isHomeDropdownOpen}
               >
-                Home
+                {translations[language].home}
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {isHomeDropdownOpen && (
                 <div className={`absolute top-full left-0 mt-2 w-48 rounded-md shadow-lg border py-2 ${theme === 'dark' ? 'bg-[#1E2A38] border-[#141B25]' : 'bg-white border-gray-200'}`}>
-                  <Link to="/home1" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsHomeDropdownOpen(false)}>Home 1</Link>
-                  <Link to="/home2" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsHomeDropdownOpen(false)}>Home 2</Link>
+                  <Link to="/home1" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsHomeDropdownOpen(false)}>{translations[language].home1}</Link>
+                  <Link to="/home2" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsHomeDropdownOpen(false)}>{translations[language].home2}</Link>
                 </div>
               )}
             </div>
@@ -176,7 +265,7 @@ const Header = () => {
               to="/aboutus"
               className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
-              About Us
+              {translations[language].about}
             </Link>
 
             {/* User Dashboard link for non-admin users */}
@@ -199,61 +288,20 @@ const Header = () => {
                 aria-haspopup="true"
                 aria-expanded={isServicesDropdownOpen}
               >
-                Services
+                {translations[language].services}
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {isServicesDropdownOpen && (
                 <div className={`absolute top-full left-0 mt-2 w-48 rounded-md shadow-lg border py-2 ${theme === 'dark' ? 'bg-[#1E2A38] border-[#141B25]' : 'bg-white border-gray-200'}`}>
-                  <Link to="/services" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>All Services</Link>
-                  <Link 
-  to="/Food-Delivery" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Food Delivery
-</Link>
-
-<Link 
-  to="/Catering-Services" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Catering Services
-</Link>
-
-<Link 
-  to="/Dine-In-Experience" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Dine-In Experience
-</Link>
-
-<Link 
-  to="/PartyOrders-BulkMeals" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Party Orders & Bulk Meals
-</Link>
-
-<Link 
-  to="/Subscription-Meals" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Subscription Meals
-</Link>
-
-<Link 
-  to="/Takeaway-Pickup" 
-  className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} 
-  onClick={() => setIsServicesDropdownOpen(false)}
->
-  Takeaway / Pickup
-</Link>
+                  <Link to="/services" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].allServices}</Link>
+                  <Link to="/Food-Delivery" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].foodDelivery}</Link>
+                  <Link to="/Catering-Services" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].catering}</Link>
+                  <Link to="/Dine-In-Experience" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].dineIn}</Link>
+                  <Link to="/PartyOrders-BulkMeals" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].partyOrders}</Link>
+                  <Link to="/Subscription-Meals" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].subscription}</Link>
+                  <Link to="/Takeaway-Pickup" className={`block px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-[#22304a]' : 'text-gray-800 hover:bg-gray-100'}`} onClick={() => setIsServicesDropdownOpen(false)}>{translations[language].takeaway}</Link>
 
                 </div>
               )}
@@ -264,14 +312,14 @@ const Header = () => {
               to="/blog"
               className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
-              Blog
+              {translations[language].blog}
             </Link>
 
             <Link
               to="/contactus"
               className={`${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-red-500 transition-colors duration-200`}
             >
-              Contact Us
+              {translations[language].contact}
             </Link>
 
             {/* Dark Mode Toggle */}
@@ -323,7 +371,7 @@ const Header = () => {
                             className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                             onClick={() => { setIsAvatarDropdownOpen(false); navigate('/admindashboard'); }}
                           >
-                            Back to Admin Dashboard
+                            {translations[language].backToAdmin}
                           </button>
                         )}
                         {/* User Dashboard link for non-admin users */}
@@ -332,14 +380,14 @@ const Header = () => {
                             className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                             onClick={() => { setIsAvatarDropdownOpen(false); navigate('/userdashboard'); }}
                           >
-                            User Dashboard
+                            {translations[language].userDashboard}
                           </button>
                         )}
                         <button
                           className={`block w-full text-left px-4 py-2 ${theme === 'dark' ? 'text-white hover:bg-red-500' : 'text-gray-800 hover:bg-blue-100'}`}
                           onClick={() => { setIsAvatarDropdownOpen(false); navigate('/welcome'); }}
                         >
-                          Logout
+                          {translations[language].logout}
                         </button>
                       </div>
                     )}
@@ -459,21 +507,21 @@ const Header = () => {
                   onClick={toggleHomeDropdown}
                   className="flex items-center justify-between w-full px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
                 >
-                  <span>Home</span>
+                  <span>{translations[language].home}</span>
                   <svg className={`w-4 h-4 transition-transform duration-200 ${isHomeDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 {isHomeDropdownOpen && (
                   <div className="pl-4 space-y-1">
-                    <a href="/" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>Home 1</a>
-                    <a href="/home2" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>Home 2</a>
+                    <a href="/" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].home1}</a>
+                    <a href="/home2" className="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md" onClick={() => { setIsHomeDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].home2}</a>
                   </div>
                 )}
               </div>
 
               <Link to="/aboutus" className="block px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-                About Us
+                {translations[language].about}
               </Link>
 
               {/* Mobile Services Dropdown */}
@@ -482,55 +530,20 @@ const Header = () => {
                   onClick={toggleServicesDropdown}
                   className="flex items-center justify-between w-full px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md"
                 >
-                  <span>Services</span>
+                  <span>{translations[language].services}</span>
                   <svg className={`w-4 h-4 transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 {isServicesDropdownOpen && (
                   <div className="pl-4 space-y-1">
-                    <Link to="/services" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>All Services</Link>
-                    <Link 
-  to="/Food-Delivery" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Food Delivery
-</Link>
-
-<Link 
-  to="/Catering-Services" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Catering Services
-</Link>
-
-<Link 
-  to="/Dine-In-Experience" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Dine-In Experience
-</Link>
-
-<Link 
-  to="/PartyOrders-BulkMeals" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Party Orders & Bulk Meals
-</Link>
-
-<Link 
-  to="/Subscription-Meals" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Subscription Meals
-</Link>
-
-<Link 
-  to="/Takeaway-Pickup" 
-  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" 
-  onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>
-  Takeaway / Pickup
-</Link>
+                    <Link to="/services" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].allServices}</Link>
+                    <Link to="/Food-Delivery" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].foodDelivery}</Link>
+                    <Link to="/Catering-Services" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].catering}</Link>
+                    <Link to="/Dine-In-Experience" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].dineIn}</Link>
+                    <Link to="/PartyOrders-BulkMeals" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].partyOrders}</Link>
+                    <Link to="/Subscription-Meals" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].subscription}</Link>
+                    <Link to="/Takeaway-Pickup" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => { setIsServicesDropdownOpen(false); setIsMobileMenuOpen(false); }}>{translations[language].takeaway}</Link>
 
                   </div>
                 )}
@@ -538,11 +551,11 @@ const Header = () => {
 
 
               <Link to="/blog" className="block px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-                Blog
+                {translations[language].blog}
               </Link>
 
               <Link to="/contact" className="block px-3 py-2 text-gray-800 hover:bg-gray-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-                Contact Us
+                {translations[language].contact}
               </Link>
             </div>
           </div>

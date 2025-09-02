@@ -1,3 +1,90 @@
+// Translation object for all user-facing text
+const translations = {
+  English: {
+    welcome: 'Welcome to Foodify',
+    emailOrUsername: 'Email or Username',
+    password: 'Password',
+    login: 'Login',
+    forgotPassword: 'Forgot Password?',
+    register: 'Register',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'Email',
+    newPassword: 'New Password',
+    confirmPassword: 'Confirm Password',
+    updatePassword: 'Update Password',
+    next: 'Next',
+    backToLogin: 'Back to Login',
+    invalidCredentials: 'Invalid credentials. Please try again.',
+    emailRegistered: 'Email already registered. Please login.',
+    registrationSuccess: 'Registration successful! Please login.',
+    emailNotFound: 'Email not found. Please register.',
+    passwordUpdated: 'Password updated successfully! Please login.',
+    enterConfirmPassword: 'Please enter and confirm your new password.',
+    passwordsNoMatch: 'Passwords do not match.',
+    unexpectedError: 'Unexpected error. Please try again.',
+  },
+  Arabic: {
+    welcome: 'مرحبًا بكم في فوديفاي',
+    emailOrUsername: 'البريد الإلكتروني أو اسم المستخدم',
+    password: 'كلمة المرور',
+    login: 'تسجيل الدخول',
+    forgotPassword: 'هل نسيت كلمة المرور؟',
+    register: 'تسجيل',
+    firstName: 'الاسم الأول',
+    lastName: 'اسم العائلة',
+    email: 'البريد الإلكتروني',
+    newPassword: 'كلمة مرور جديدة',
+    confirmPassword: 'تأكيد كلمة المرور',
+    updatePassword: 'تحديث كلمة المرور',
+    next: 'التالي',
+    backToLogin: 'العودة لتسجيل الدخول',
+    invalidCredentials: 'بيانات الاعتماد غير صحيحة. حاول مرة أخرى.',
+    emailRegistered: 'البريد الإلكتروني مسجل بالفعل. يرجى تسجيل الدخول.',
+    registrationSuccess: 'تم التسجيل بنجاح! يرجى تسجيل الدخول.',
+    emailNotFound: 'البريد الإلكتروني غير موجود. يرجى التسجيل.',
+    passwordUpdated: 'تم تحديث كلمة المرور بنجاح! يرجى تسجيل الدخول.',
+    enterConfirmPassword: 'يرجى إدخال وتأكيد كلمة المرور الجديدة.',
+    passwordsNoMatch: 'كلمتا المرور غير متطابقتين.',
+    unexpectedError: 'حدث خطأ غير متوقع. حاول مرة أخرى.',
+  },
+  Hebrew: {
+    welcome: 'ברוכים הבאים לפודיפיי',
+    emailOrUsername: 'אימייל או שם משתמש',
+    password: 'סיסמה',
+    login: 'התחברות',
+    forgotPassword: 'שכחת סיסמה?',
+    register: 'הרשמה',
+    firstName: 'שם פרטי',
+    lastName: 'שם משפחה',
+    email: 'אימייל',
+    newPassword: 'סיסמה חדשה',
+    confirmPassword: 'אשר סיסמה',
+    updatePassword: 'עדכן סיסמה',
+    next: 'הבא',
+    backToLogin: 'חזרה להתחברות',
+    invalidCredentials: 'פרטי ההתחברות שגויים. נסה שוב.',
+    emailRegistered: 'האימייל כבר רשום. אנא התחבר.',
+    registrationSuccess: 'ההרשמה הצליחה! אנא התחבר.',
+    emailNotFound: 'האימייל לא נמצא. אנא הירשם.',
+    passwordUpdated: 'הסיסמה עודכנה בהצלחה! אנא התחבר.',
+    enterConfirmPassword: 'אנא הזן ואשר את הסיסמה החדשה.',
+    passwordsNoMatch: 'הסיסמאות אינן תואמות.',
+    unexpectedError: 'שגיאה לא צפויה. נסה שוב.',
+  },
+};
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUser, FaLock } from "react-icons/fa";
+import bgImage from "../assets/welcome.jpg.jpg";
+import logoImage from "../assets/logo.png";
+
+// Language dropdown options
+const languageOptions = [
+  { code: 'English', label: 'English' },
+  { code: 'Arabic', label: 'العربية' },
+  { code: 'Hebrew', label: 'עברית' },
+];
 
 export default function LoginPage() {
   const [form, setForm] = useState("login");
@@ -14,8 +101,21 @@ export default function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('selectedLanguage') || 'English';
+    }
+    return 'English';
+  });
   const navigate = useNavigate();
 
+  // Handle language change
+  const handleLanguageChange = (e) => {
+    const lang = e.target.value;
+    setSelectedLanguage(lang);
+    localStorage.setItem('selectedLanguage', lang);
+    window.dispatchEvent(new Event('language-changed'));
+  };
   // Login logic with localStorage
   const handleLogin = (e) => {
     e.preventDefault();
@@ -37,7 +137,7 @@ export default function LoginPage() {
       localStorage.setItem('email', foundUser.email || '');
       navigate("/home1");
     } else {
-      setError("Invalid credentials. Please try again.");
+      setError(translations[selectedLanguage].invalidCredentials);
     }
   };
 
@@ -47,7 +147,7 @@ export default function LoginPage() {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     // Check if email already exists
     if (users.some((u) => u.email === regEmail)) {
-      setMessage("Email already registered. Please login.");
+      setMessage(translations[selectedLanguage].emailRegistered);
       setForm("login");
       setRegEmail("");
       setRegPassword("");
@@ -72,7 +172,7 @@ export default function LoginPage() {
     localStorage.setItem('firstname', regFirstName);
     localStorage.setItem('lastname', regLastName);
     localStorage.setItem('email', regEmail);
-    setMessage("Registration successful! Please login.");
+  setMessage(translations[selectedLanguage].registrationSuccess);
     setForm("login");
     setRegEmail("");
     setRegPassword("");
@@ -86,7 +186,7 @@ export default function LoginPage() {
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const user = users.find((u) => u.email === forgotEmail);
       if (!user) {
-        setError("Email not found. Please register.");
+        setError(translations[selectedLanguage].emailNotFound);
         setMessage("");
         return;
       }
@@ -96,11 +196,11 @@ export default function LoginPage() {
       setMessage("");
     } else if (forgotStep === 2) {
       if (!newPassword || !confirmPassword) {
-        setError("Please enter and confirm your new password.");
+        setError(translations[selectedLanguage].enterConfirmPassword);
         return;
       }
       if (newPassword !== confirmPassword) {
-        setError("Passwords do not match.");
+        setError(translations[selectedLanguage].passwordsNoMatch);
         return;
       }
       const users = JSON.parse(localStorage.getItem("users") || "[]");
@@ -108,7 +208,7 @@ export default function LoginPage() {
       if (idx !== -1) {
         users[idx].password = newPassword;
         localStorage.setItem("users", JSON.stringify(users));
-        setMessage("Password updated successfully! Please login.");
+  setMessage(translations[selectedLanguage].passwordUpdated);
         setForm("login");
         setForgotEmail("");
         setForgotStep(1);
@@ -116,18 +216,32 @@ export default function LoginPage() {
         setConfirmPassword("");
         setError("");
       } else {
-        setError("Unexpected error. Please try again.");
+  setError(translations[selectedLanguage].unexpectedError);
       }
     }
   };
 
+  // Main return with language dropdown in top right
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      className={`min-h-screen flex items-center justify-center bg-cover bg-center relative`}
       style={{
         backgroundImage: `url(${bgImage})`,
+        direction: selectedLanguage === 'Arabic' || selectedLanguage === 'Hebrew' ? 'rtl' : 'ltr',
       }}
     >
+      {/* Language dropdown in top right */}
+      <div className="absolute top-6 right-6 z-20">
+        <select
+          value={selectedLanguage}
+          onChange={handleLanguageChange}
+          className="bg-white bg-opacity-80 rounded-md px-4 py-2 shadow text-black focus:outline-none"
+        >
+          {languageOptions.map(opt => (
+            <option key={opt.code} value={opt.code}>{opt.label}</option>
+          ))}
+        </select>
+      </div>
       {/* Logo in top left */}
       <img
         src={logoImage}
@@ -136,7 +250,7 @@ export default function LoginPage() {
         style={{ objectFit: "contain" }}
       />
       <div className="bg-transparent w-full max-w-md mx-4 flex flex-col items-center">
-        <h2 className="text-4xl font-light text-white mb-8 mt-2 tracking-wide">Welcome to Foodify</h2>
+  <h2 className="text-4xl font-light text-white mb-8 mt-2 tracking-wide">{translations[selectedLanguage].welcome}</h2>
         {message && (
           <div className="text-green-700 text-sm mb-2 text-center">{message}</div>
         )}
@@ -145,7 +259,7 @@ export default function LoginPage() {
             <div className="relative mb-4">
               <input
                 type="text"
-                placeholder="Email or Username"
+                placeholder={translations[selectedLanguage].emailOrUsername}
                 className="w-full border-b border-gray-200 bg-transparent py-3 pl-10 pr-4 text-white placeholder-gray-200 focus:outline-none focus:border-red-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -156,7 +270,7 @@ export default function LoginPage() {
             <div className="relative mb-6">
               <input
                 type="password"
-                placeholder="Password"
+                placeholder={translations[selectedLanguage].password}
                 className="w-full border-b border-gray-200 bg-transparent py-3 pl-10 pr-4 text-white placeholder-gray-200 focus:outline-none focus:border-red-400"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -169,7 +283,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-md shadow-md transition"
             >
-              Login
+              {translations[selectedLanguage].login}
             </button>
             <div className="flex justify-end mt-2 text-sm">
               <button
@@ -177,7 +291,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => setForm("forgot")}
               >
-                Forgot Password?
+                {translations[selectedLanguage].forgotPassword}
               </button>
             </div>
           </form>
@@ -186,7 +300,7 @@ export default function LoginPage() {
           <form onSubmit={handleRegister} className="space-y-5">
             <div className="flex gap-2">
               <div className="flex-1">
-                <label className="block text-white mb-1">First Name</label>
+                <label className="block text-white mb-1">{translations[selectedLanguage].firstName}</label>
                 <input
                   type="text"
                   className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -196,7 +310,7 @@ export default function LoginPage() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-white mb-1">Last Name</label>
+                <label className="block text-white mb-1">{translations[selectedLanguage].lastName}</label>
                 <input
                   type="text"
                   className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -207,7 +321,7 @@ export default function LoginPage() {
               </div>
             </div>
             <div>
-              <label className="block text-white mb-1">Email</label>
+                <label className="block text-white mb-1">{translations[selectedLanguage].email}</label>
               <input
                 type="email"
                 className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -217,7 +331,7 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label className="block text-white mb-1">Password</label>
+                <label className="block text-white mb-1">{translations[selectedLanguage].password}</label>
               <input
                 type="password"
                 className="w-full border-b-2 text-white border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -230,7 +344,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
             >
-              Register
+              {translations[selectedLanguage].register}
             </button>
           </form>
         )}
@@ -239,7 +353,7 @@ export default function LoginPage() {
             {forgotStep === 1 && (
               <>
                 <div>
-                  <label className="block text-white mb-1">Email</label>
+                  <label className="block text-white mb-1">{translations[selectedLanguage].email}</label>
                   <input
                     type="email"
                     className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -252,14 +366,14 @@ export default function LoginPage() {
                   type="submit"
                   className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
                 >
-                  Next
+                  {translations[selectedLanguage].next}
                 </button>
               </>
             )}
             {forgotStep === 2 && (
               <>
                 <div>
-                  <label className="block text-white mb-1">New Password</label>
+                  <label className="block text-white mb-1">{translations[selectedLanguage].newPassword}</label>
                   <input
                     type="password"
                     className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -269,7 +383,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-white mb-1">Confirm Password</label>
+                  <label className="block text-white mb-1">{translations[selectedLanguage].confirmPassword}</label>
                   <input
                     type="password"
                     className="w-full text-white border-b-2 border-gray-300 focus:border-red-500 bg-transparent py-2 pl-2 outline-none"
@@ -282,7 +396,7 @@ export default function LoginPage() {
                   type="submit"
                   className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded transition"
                 >
-                  Update Password
+                  {translations[selectedLanguage].updatePassword}
                 </button>
               </>
             )}
@@ -301,7 +415,7 @@ export default function LoginPage() {
               }}
               type="button"
             >
-              Register
+              {translations[selectedLanguage].register}
             </button>
           </div>
         )}
@@ -316,7 +430,7 @@ export default function LoginPage() {
               }}
               type="button"
             >
-              Back to Login
+              {translations[selectedLanguage].backToLogin}
             </button>
           </div>
         )}
@@ -324,8 +438,3 @@ export default function LoginPage() {
     </div>
   );
 }
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUser, FaLock } from "react-icons/fa";
-import bgImage from "../assets/welcome.jpg.jpg";
-import logoImage from "../assets/logo.png";

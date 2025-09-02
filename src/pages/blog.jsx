@@ -1,3 +1,4 @@
+
 import React from "react";
 // Translation object for Blog page
 const translations = {
@@ -426,19 +427,28 @@ export default function BlogHero() {
   // Theme state synced with Header
   const [theme, setTheme] = React.useState('light');
   const [language, setLanguage] = React.useState('en');
+  // Map UI language names to codes
+  const langMap = {
+    English: 'en',
+    Arabic: 'ar',
+    Hebrew: 'he',
+    en: 'en',
+    ar: 'ar',
+    he: 'he',
+  };
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedTheme = localStorage.getItem('theme') || 'light';
       setTheme(storedTheme);
-      const storedLang = localStorage.getItem('language') || 'en';
-      setLanguage(storedLang);
+      const storedSelectedLang = localStorage.getItem('selectedLanguage') || 'English';
+      setLanguage(langMap[storedSelectedLang] || 'en');
       const handleThemeChange = () => {
         const newTheme = localStorage.getItem('theme') || 'light';
         setTheme(newTheme);
       };
       const handleLangChange = () => {
-        const newLang = localStorage.getItem('language') || 'en';
-        setLanguage(newLang);
+        const newSelectedLang = localStorage.getItem('selectedLanguage') || 'English';
+        setLanguage(langMap[newSelectedLang] || 'en');
       };
       window.addEventListener('theme-changed', handleThemeChange);
       window.addEventListener('storage', handleThemeChange);
