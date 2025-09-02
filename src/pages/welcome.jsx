@@ -249,7 +249,7 @@ export default function LoginPage() {
         className="h-16 absolute top-6 left-6 z-10 bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
         style={{ objectFit: "contain" }}
       />
-      <div className="bg-transparent w-full max-w-md mx-4 flex flex-col items-center">
+  <div className="bg-red-500 bg-opacity-40 w-full max-w-md mx-4 rounded-2xl shadow-lg flex flex-col items-center">
   <h2 className="text-4xl font-light text-white mb-8 mt-2 tracking-wide">{translations[selectedLanguage].welcome}</h2>
         {message && (
           <div className="text-green-700 text-sm mb-2 text-center">{message}</div>
